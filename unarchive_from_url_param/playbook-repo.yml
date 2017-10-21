@@ -1,0 +1,14 @@
+---
+- hosts: repo
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: Install Apache 2
+    apt:
+      name: apache2
+      update_cache: yes
+  - name: Copy files
+    copy:
+      src: "{{item}}"
+      dest: /var/www/html
+    with_items: [server1.tgz, server2.tgz]

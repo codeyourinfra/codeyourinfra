@@ -1,0 +1,19 @@
+---
+- hosts: servers
+  vars:
+    hostname: "{{ansible_hostname}}"
+    params: "{{lookup('file', 'params.json')}}"
+    url_query: "[?host=='{{hostname}}'].url"
+    url_param: "{{params|json_query(url_query)}}"
+    target_query: "[?host=='{{hostname}}'].target"
+    target_param: "{{params|json_query(target_query)}}"
+  tasks:
+  - name: Create the target directory if it doesn't exist
+    file:
+      path: "{{target_param[0]}}"
+      state: directory
+  - name: Unarchive from url
+    unarchive:
+      src: "{{url_param[0]}}"
+      dest: "{{target_param[0]}}"
+      remote_src: yes

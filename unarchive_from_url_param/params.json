@@ -1,0 +1,12 @@
+[
+  {
+    "host": "server1",
+    "url": "http://192.168.33.10/server1.tgz",
+    "target": "/var/target"
+  },
+  {
+    "host": "server2",
+    "url": "http://192.168.33.10/server2.tgz",
+    "target": "/var/target"
+  }
+]
