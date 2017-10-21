@@ -7,8 +7,9 @@
     apt:
       name: apache2
       update_cache: yes
-  - name: Copy files
-    copy:
-      src: "{{item}}"
-      dest: /var/www/html
-    with_items: [server1.tgz, server2.tgz]
+  - name: Download files
+    get_url:
+      url: "{{item.url}}"
+      dest: "/var/www/html/{{item.dest}}"
+    with_items: [{"url": "http://www-us.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz", "dest": "server1.tar.gz"},
+                 {"url": "https://services.gradle.org/distributions/gradle-4.2.1-bin.zip", "dest": "server2.zip"}]
