@@ -6,7 +6,7 @@ You have a bunch of servers and quite often you have to manually extract in each
 
 ## Solution
 
-Keep in a separated file all the information needed (params.json). For each server, inform where the compressed file is (url) and where it must be extracted in (target directory). These parameters will be used during the Ansible playbook execution (playbook-servers.yml). All the servers listed in the Ansible inventory file (hosts) *servers* section will be affected in a single execution.
+Keep in a separated file all the information needed (params.json). For each server, inform where the compressed file is (url) and where it must be extracted in (target directory). These parameters will be used during the Ansible playbook execution (playbook-servers.yml). All the servers listed in the Ansible inventory file (hosts) **servers** section will be affected in a single execution.
 
 ## Test environment
 
