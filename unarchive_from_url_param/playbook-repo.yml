@@ -12,4 +12,4 @@
       url: "{{item.url}}"
       dest: "/var/www/html/{{item.dest}}"
     with_items: [{"url": "http://www-us.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz", "dest": "server1.tar.gz"},
-                 {"url": "https://services.gradle.org/distributions/gradle-4.2.1-bin.zip", "dest": "server2.zip"}]
+                 {"url": "http://www-us.apache.org/dist/ant/binaries/apache-ant-1.10.1-bin.zip", "dest": "server2.zip"}]

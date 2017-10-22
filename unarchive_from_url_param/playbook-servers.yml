@@ -1,5 +1,6 @@
 ---
 - hosts: servers
+  become: yes
   vars:
     hostname: "{{ansible_hostname}}"
     params: "{{lookup('file', 'params.json')}}"
