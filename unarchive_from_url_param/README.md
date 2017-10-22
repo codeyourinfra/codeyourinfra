@@ -12,7 +12,7 @@ Keep in a separated file all the information needed ([params.json](https://githu
 
 First of all, turn on the VMs, executing the command `$ vagrant up`. The VM from which the compressed files will be downloaded (**repo**) is automatically provisioned ([playbook-repo.yml](https://github.com/esign-consulting/codeyourinfra/blob/master/unarchive_from_url_param/playbook-repo.yml)). The others VMs (**server1** and **server2**) represent the set of target servers where the unarchive task will be performed.
 
-Once the test environment is up, execute the command `ansible-playbook playbook-servers.yml -u vagrant -k -i hosts`. The **-u** parameter identifies the ssh user, the **-k** parameter prompts for password information (vagrant, too), and the **-i** parameter points to the inventory file. In just one shot, the task is automatically performed server by server.
+Once the test environment is up, execute the command `$ ansible-playbook playbook-servers.yml -u vagrant -k -i hosts`. The **-u** parameter identifies the ssh user, the **-k** parameter prompts for password information (vagrant, too), and the **-i** parameter points to the inventory file. In just one shot, the task is automatically performed server by server.
 
 Software | Version
 --- | -----
