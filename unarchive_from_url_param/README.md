@@ -16,7 +16,7 @@ Once the test environment is up, execute the command `$ ansible-playbook playboo
 
 ### Important
 
-The test was done in the environment described in the table below. For the **repo** VM provisioning, make sure you have internet connection. Depending on its speed, the provisioning step can last more than you expect. If you are behind a proxy, make sure you can access the [Ubuntu remote repository](http://us.archive.ubuntu.com) and you are able to download compressed files. Finally, for the **playbook-servers.yml** execution, make sure you are using the same SSH credentials for all servers.
+The test was done in the environment described in the table below. For the **repo** VM provisioning, make sure you have Internet connection. Depending on its speed, the provisioning step can last more than you expect. If you are behind a proxy, make sure you can access the [Ubuntu remote repository](http://us.archive.ubuntu.com) and you are able to download compressed files. Finally, for the **playbook-servers.yml** execution, make sure you are using the same SSH credentials for all servers.
 
 Software | Version
 --- | -----
