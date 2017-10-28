@@ -25,5 +25,6 @@ Software | Version
 Host OS | OS X El Capitan 10.11.6
 VMs OS | Ubuntu 14.04.3 LTS
 Vagrant | 2.0.0
-Virtual Box | 5.1.30
+VirtualBox | 5.1.30
+VirtualBox Extension Pack | 5.1.28
 Ansible | 2.4.0.0
