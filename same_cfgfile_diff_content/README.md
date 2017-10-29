@@ -1,6 +1,6 @@
 # Same configuration file with different content in different environments
 
-This solution is explained in detail in the Codeyourinfra project blog post [Blog post](http://codeyourinfra.today/how-to-). Check it out!
+This solution is explained in detail in the Codeyourinfra project blog post [How to deal with the same configuration file with different content in different environments](http://codeyourinfra.today/how-to-deal-with-the-same-configuration-file-with-different-content-in-different-environments). Check it out!
 
 ## Problem
 
