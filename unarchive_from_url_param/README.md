@@ -18,8 +18,7 @@ Once the test environment is up, execute the command `$ ansible-playbook playboo
 
 ### Important
 
-The test was done in the environment described in the table below. For the **repo** VM provisioning, make sure you have Internet connection. Depending on its speed, the provisioning step can last more than you expect. If you are behind a proxy, make sure you can access the [Ubuntu remote repository](http://us.archive.ubuntu.com) and you are able to download compressed files. Finally, for the **playbook-servers.yml** execution, make sure you are using the same SSH credentials for all servers.
-
+The test was done in the environment described in the table below.
 Software | Version
 --- | -----
 Host OS | OS X El Capitan 10.11.6
@@ -28,3 +27,7 @@ Vagrant | 2.0.0
 VirtualBox | 5.1.30
 VirtualBox Extension Pack | 5.1.28
 Ansible | 2.4.0.0
+
+In addition, the test requires Internet connection, for the **minimal/trusty64** Vagrant box downloading and for the **repo** VM provisioning. Depending on the Internet connection speed, the whole test environment can last more than you expect to be up and running.
+
+If you are behind a proxy, extra configuration is needed. Make sure you can access the [Ubuntu remote repository](http://us.archive.ubuntu.com) and you are able to download compressed files.
