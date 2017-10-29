@@ -4,8 +4,10 @@ This solution is explained in detail in the Codeyourinfra project blog post [How
 
 ## Problem
 
+The dev team has to deploy the application in different QA environments. The application requires a properties file where the database string connection is defined. In each environment the database string connection is different. That's just an example of the same configuration file with different content in different environments.
 
 ## Solution
+
 
 
 ## Test
