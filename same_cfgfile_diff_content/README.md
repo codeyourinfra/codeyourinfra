@@ -16,6 +16,7 @@ First of all, turn on the 3 VMs that represent the QA environments, executing th
 
 ### Important
 
+The test was done in the environment described in the table below.
 
 Software | Version
 --- | -----
