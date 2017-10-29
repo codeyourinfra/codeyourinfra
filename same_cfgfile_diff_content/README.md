@@ -1,4 +1,4 @@
-# How to manage the same configuration file with different content in different environments
+# How to deal with the same configuration file with different content in different environments
 
 This solution is explained in detail in the Codeyourinfra project blog post [Blog post](http://codeyourinfra.today/how-to-). Check it out!
 
