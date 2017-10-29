@@ -1,0 +1,15 @@
+---
+- hosts: qa
+  become: yes
+  vars:
+    hostname: "{{ansible_hostname}}"
+    config: "{{lookup('file', 'config.json')}}"
+    items_query: "[?host=='{{hostname}}'].items"
+  tasks:
+  - name: Set the configuration file content
+    lineinfile:
+      path: /etc/conf
+      create: yes
+      regexp: "^{{item.key}}=.*$"
+      line: "{{item.key}}={{item.value}}"
+    with_items: "{{config|json_query(items_query)}}"
