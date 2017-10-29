@@ -26,3 +26,5 @@ Vagrant | 2.0.0
 VirtualBox | 5.1.30
 VirtualBox Extension Pack | 5.1.28
 Ansible | 2.4.0.0
+
+In addition, the test requires Internet connection, for the **minimal/trusty64** Vagrant box downloading. Depending on the Internet connection speed, the test environment can last more than you expect to be up and running, in the first time.
