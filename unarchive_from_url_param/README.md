@@ -19,6 +19,7 @@ Once the test environment is up, execute the command `$ ansible-playbook playboo
 ### Important
 
 The test was done in the environment described in the table below.
+
 Software | Version
 --- | -----
 Host OS | OS X El Capitan 10.11.6
