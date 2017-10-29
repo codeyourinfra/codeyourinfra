@@ -12,6 +12,7 @@ Instead of having a version of the same configuration file for each environment,
 
 ## Test
 
+First of all, turn on the 3 VMs that represent the QA environments, executing the command `$ vagrant up`. After that, execute the command `$ ansible-playbook playbook.yml -u vagrant -k -i hosts`, and type *vagrant* for the **SSH password** prompted. Finally, in order to check the configuration file's content of every environment, execute the command `$ ansible qa -m shell -a "cat /etc/conf" -u vagrant -k -i hosts`.
 
 ### Important
 
