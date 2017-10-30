@@ -8,7 +8,7 @@ The dev team has to deploy the application in different QA environments. The app
 
 ## Solution
 
-Instead of having a version of the same configuration file for each environment, it's possible to mantain just one, including all the values required in every environment ([config.json](https://github.com/esign-consulting/codeyourinfra/blob/master/same_cfgfile_diff_content/config.json)). This metadata is then used during the single Ansible playbook's execution ([playbook.yml](https://github.com/esign-consulting/codeyourinfra/blob/master/same_cfgfile_diff_content/playbook.yml)) that sets the configuration file's content, specific to each environment. 
+Instead of having a version of the same configuration file for each environment, it's possible to maintain just one, including all the values required in every environment ([config.json](https://github.com/esign-consulting/codeyourinfra/blob/master/same_cfgfile_diff_content/config.json)). This metadata is then used during the single Ansible playbook's execution ([playbook.yml](https://github.com/esign-consulting/codeyourinfra/blob/master/same_cfgfile_diff_content/playbook.yml)) that sets the configuration file's content, specific to each environment. 
 
 ## Test
 
