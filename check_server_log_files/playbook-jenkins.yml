@@ -1,0 +1,30 @@
+---
+- hosts: jenkins
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: Install apt-transport-https (required for the apt_repository task)
+    apt:
+      name: apt-transport-https
+      update_cache: yes
+  - name: Add the Oracle Java repository into sources list
+    apt_repository:
+      repo: 'ppa:webupd8team/java'
+  - name: Accept the Oracle License
+    debconf:
+      name: oracle-java8-installer
+      question: shared/accepted-oracle-license-v1-1
+      value: 'true'
+      vtype: select
+  - name: Install Oracle Java 8
+    apt:
+      name: oracle-java8-installer
+  - name: Add the Jenkins apt key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+  - name: Add the Jenkins repository into sources list
+    apt_repository:
+      repo: deb https://pkg.jenkins.io/debian-stable binary/
+  - name: Install Jenkins
+    apt:
+      name: jenkins
