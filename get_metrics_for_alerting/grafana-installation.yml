@@ -1,0 +1,26 @@
+---
+- name: Add the Grafana apt key
+  apt_key:
+    url: https://packagecloud.io/gpg.key
+- name: Add the Grafana repository into sources list
+  apt_repository:
+    repo: deb https://packagecloud.io/grafana/testing/debian/ jessie main
+- name: Install Grafana
+  apt:
+    name: grafana
+- name: Ensure Grafana is running (and enable it at boot)
+  service:
+    name: grafana-server
+    state: started
+    enabled: yes
+- name: Create data source
+  uri:
+    url: http://localhost:3000/api/datasources
+    method: POST
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    body: "{{lookup('file','monitor.json')}}"
+    body_format: json
+  register: response
+  failed_when: response.status != 200 and response.status != 409

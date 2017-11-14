@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "minimal/trusty64"
+
+  config.vm.define "monitor" do |monitor|
+    monitor.vm.hostname = "monitor.local"
+    monitor.vm.network "private_network", ip: "192.168.33.10"
+    #monitor.vm.provision "ansible" do |ansible|
+    #  ansible.playbook = "playbook-monitor.yml"
+    #end
+  end
+
+  (1..2).each do |i|
+    config.vm.define "server#{i}" do |server|
+      server.vm.hostname = "server#{i}.local"
+      server.vm.network "private_network", ip: "192.168.33.#{i+1}0"
+    end
+  end
+end
