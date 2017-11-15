@@ -11,3 +11,5 @@
     include_tasks: influxdb-installation.yml
   - name: Install Grafana
     include_tasks: grafana-installation.yml
+  - name: Install Ansible
+    include_tasks: ansible-installation.yml
