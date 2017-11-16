@@ -13,8 +13,3 @@
     name: influxdb
     state: started
     enabled: yes
-- name: Create the database
-  uri:
-    url: http://localhost:8086/query
-    method: POST
-    body: "q=CREATE DATABASE monitor"

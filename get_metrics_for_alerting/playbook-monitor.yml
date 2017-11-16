@@ -13,3 +13,5 @@
     include_tasks: grafana-installation.yml
   - name: Install Ansible
     include_tasks: ansible-installation.yml
+  - name: Configure monitoring
+    include_tasks: monitoring-configuration.yml

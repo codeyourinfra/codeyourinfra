@@ -1,0 +1,47 @@
+---
+- name: Create the InfluxDB database
+  uri:
+    url: http://localhost:8086/query
+    method: POST
+    body: "q=CREATE DATABASE monitor"
+- name: Create the Grafana datasource
+  uri:
+    url: http://localhost:3000/api/datasources
+    method: POST
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    body: "{{lookup('file','monitor-datasource.json')}}"
+    body_format: json
+  register: response
+  failed_when: response.status != 200 and response.status != 409
+- name: Create the Grafana dashboard
+  uri:
+    url: http://localhost:3000/api/dashboards/db
+    method: POST
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    body: "{{lookup('file','used_mem_pct-dashboard.json')}}"
+    body_format: json
+- name: Add localhost to Ansible inventory
+  blockinfile:
+    path: /etc/ansible/hosts
+    block: |
+      [monitored_servers]
+      localhost ansible_connection=local
+- name: Create the Ansible playbooks directory if it doesn't exist
+  file:
+    path: /etc/ansible/playbooks
+    state: directory
+- name: Copy the playbook-get-metrics.yml
+  copy:
+    src: playbook-get-metrics.yml
+    dest: /etc/ansible/playbooks/playbook-get-metrics.yml
+    owner: root
+    group: root
+    mode: 0644
+- name: Get metrics from monitored servers every minute
+  cron:
+    name: "get metrics"
+    job: "ansible-playbook /etc/ansible/playbooks/playbook-get-metrics.yml"
