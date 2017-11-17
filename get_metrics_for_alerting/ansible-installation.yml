@@ -1,0 +1,10 @@
+---
+- name: Install software-properties-common
+  apt:
+    name: software-properties-common
+- name: Add the Ansible repository
+  apt_repository:
+    repo: "ppa:ansible/ansible"
+- name: Install Ansible
+  apt:
+    name: ansible
