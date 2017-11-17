@@ -15,6 +15,17 @@
     body_format: json
   register: response
   failed_when: response.status != 200 and response.status != 409
+- name: Create the Slack notification channel
+  uri:
+    url: http://localhost:3000/api/alert-notifications
+    method: POST
+    user: admin
+    password: admin
+    force_basic_auth: yes
+    body: "{{lookup('file','slack-notification-channel.json')}}"
+    body_format: json
+  register: response
+  failed_when: response.status != 200 and response.status != 500
 - name: Create the Grafana dashboard
   uri:
     url: http://localhost:3000/api/dashboards/db

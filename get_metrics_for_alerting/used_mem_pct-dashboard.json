@@ -26,6 +26,44 @@
         "height": "250px",
         "panels": [
           {
+            "alert": {
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      95
+                    ],
+                    "type": "gt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "5m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "last"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "frequency": "60s",
+              "handler": 1,
+              "message": "The last 5 used memory percentage values are greater than or equal to the threshold of 95%.",
+              "name": "Used memory percentage alert",
+              "noDataState": "no_data",
+              "notifications": [
+                {
+                  "id": 1
+                }
+              ]
+            },
             "aliasColors": {},
             "bars": false,
             "dashLength": 10,
