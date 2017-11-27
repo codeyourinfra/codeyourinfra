@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+load '../common/timestamp-appender.rb'
+
 Vagrant.configure("2") do |config|
   config.vm.define "jenkins" do |jenkins|
     jenkins.vm.box = "minimal/trusty64"
