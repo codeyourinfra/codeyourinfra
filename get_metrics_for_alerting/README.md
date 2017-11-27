@@ -12,7 +12,7 @@ The solution is based on [InfluxDB](https://docs.influxdata.com/influxdb), a hig
 
 ## Test
 
-First of all, run the command `$ vagrant up monitor`, in order to turn on the **monitor** server. Then, open your web browser and access the Grafana web application through the **URL** http://192.168.33.10:3000. The **user** and the **password** are *admin*. After that, click in the **used_mem_pct** dashboard. You will see the **Used memory percentage** line chart, with data from the **monitor** server itself. An alert is sent to a [Slack workspace](https://mygrafanaalerts.slack.com) (click [here](https://join.slack.com/t/mygrafanaalerts/shared_invite/enQtMjc0OTUyMjgxMzM0LWYyNDU1NWI3OWIxYmFjOGQ0NmNkOTNkOTFhN2NkNjI3Y2E3OWYzNTA2YmE2NTE2MzE1ZDlhYjZkYzFmZWY3ODI) to join) if the last 5 used memory percentage values are grater than or equal to 95%, the defined threshold.
+First of all, run the command `$ vagrant up monitor`, in order to turn on the **monitoring server**. Then, open your web browser and access the Grafana web application through the **URL** http://192.168.33.10:3000. The **user** and the **password** are *admin*. After that, click in the **used_mem_pct** dashboard. You will see the **Used memory percentage** line chart, with data from the **monitoring server** itself. An alert is sent to a [Slack workspace](https://mygrafanaalerts.slack.com) (click [here](https://join.slack.com/t/mygrafanaalerts/shared_invite/enQtMjc0OTUyMjgxMzM0LWYyNDU1NWI3OWIxYmFjOGQ0NmNkOTNkOTFhN2NkNjI3Y2E3OWYzNTA2YmE2NTE2MzE1ZDlhYjZkYzFmZWY3ODI) to join) if the last 5 used memory percentage values are grater than or equal to 95%, the defined threshold.
 
 ### Important
 
@@ -30,3 +30,11 @@ InfluxDB | 1.3.7
 Grafana | 4.6.2
 
 In addition, the test requires Internet connection, for the **minimal/trusty64** Vagrant box downloading. Depending on the Internet connection speed, the test environment can last more than you expect to be up and running, specially for the first time.
+
+### Provisioning options
+
+Since [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project provides two options for provisioning: **baked** and **fried** (default). If the **monitoring server** is turned on with the environment variable **PROVISIONING_OPTION** set to **baked**, the Vagrant box that will be used is **codeyourinfra/monitor**, instead of the default **minimal/trusty64**.
+
+In the **codeyourinfra/monitor** Vagrant box there are already all the tools used by the solution, so it's needless to provision from the scratch, as the **minimal/trusty64** Vagrant box requires. Despite the fact the **codeyourinfra/monitor** Vagrant box is bigger than the **minimal/trusty64** Vagrant box, it is much faster to boot up, as shown by the comparison table below:
+
+
