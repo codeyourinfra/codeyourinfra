@@ -21,3 +21,12 @@ The project is totally open for collaboration, like any other open source projec
 * Making a pull request of a solution improvement
 * Commenting on the articles posted on the [blog](http://codeyourinfra.today/blog)
 * Telling the [problems](http://codeyourinfra.today/your-problem) you face as a sysadmin
+
+## Environment variables
+
+Since [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project provides environment variables for changing the default behaviour of the development environment initialization. They are as follows:
+
+Environment variable | Required | Default | Choices | Comments
+-------------------- | -------- | ------- | ------- | --------
+APPEND_TIMESTAMP | No | false | true or false | If 'true', prepend the current datetime in each line of the vagrant command output.
+PROVISIONING_OPTION | No | fried | baked or fried | If 'baked', a previously prepared Vagrant box is used, rather than the default one that requires to be provisioned from the scratch.
