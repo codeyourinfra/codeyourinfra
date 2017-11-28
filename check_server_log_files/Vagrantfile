@@ -3,13 +3,21 @@
 
 load '../common/timestamp-appender.rb'
 
+provisioning_option = ENV['PROVISIONING_OPTION'] || 'fried'
+if provisioning_option != 'baked' && provisioning_option != 'fried'
+  puts 'PROVISIONING_OPTION must be \'baked\' or \'fried\'.'
+  abort
+end
+
 Vagrant.configure("2") do |config|
   config.vm.define "jenkins" do |jenkins|
-    jenkins.vm.box = "minimal/trusty64"
+    jenkins.vm.box = ("codeyourinfra/jenkins" if provisioning_option == 'baked') || "minimal/trusty64"
     jenkins.vm.hostname = "jenkins.local"
     jenkins.vm.network "private_network", ip: "192.168.33.10"
-    jenkins.vm.provision "ansible" do |ansible|
-      ansible.playbook = "playbook-jenkins.yml"
+    if provisioning_option == 'fried'
+      jenkins.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook-jenkins.yml"
+      end
     end
   end
 end
