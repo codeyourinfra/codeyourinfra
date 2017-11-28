@@ -3,14 +3,25 @@
 
 load '../common/timestamp-appender.rb'
 
+provisioning_option = ENV['PROVISIONING_OPTION'] || 'fried'
+if provisioning_option != 'baked' && provisioning_option != 'fried'
+  puts 'PROVISIONING_OPTION must be \'baked\' or \'fried\'.'
+  abort
+end
+
 Vagrant.configure("2") do |config|
   config.vm.box = "minimal/trusty64"
 
   config.vm.define "repo" do |repo|
+    if provisioning_option == 'baked'
+      repo.vm.box = "codeyourinfra/repo"
+    end
     repo.vm.hostname = "repo.local"
     repo.vm.network "private_network", ip: "192.168.33.10"
-    repo.vm.provision "ansible" do |ansible|
-      ansible.playbook = "playbook-repo.yml"
+    if provisioning_option == 'fried'
+      repo.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook-repo.yml"
+      end
     end
   end
 
