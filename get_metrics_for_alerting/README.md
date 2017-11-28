@@ -19,7 +19,7 @@ First of all, run the command `$ vagrant up monitor`, in order to turn on the **
 The test was done in the environment described in the table below.
 
 Software | Version
---- | -----
+-------- | -------
 Host OS | OS X El Capitan 10.11.6
 VMs OS | Ubuntu 14.04.3 LTS
 Vagrant | 2.0.0
@@ -33,8 +33,13 @@ In addition, the test requires Internet connection, for the **minimal/trusty64**
 
 ### Provisioning options
 
-Since [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project provides two options for provisioning: **baked** and **fried** (default). If the **monitoring server** is turned on with the environment variable **PROVISIONING_OPTION** set to **baked**, the Vagrant box that will be used is **codeyourinfra/monitor**, instead of the default **minimal/trusty64**.
+Since [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project provides two options for provisioning: **baked** and **fried** (default). If the **monitoring server** is turned on with the **PROVISIONING_OPTION** environment variable set to **baked**, the Vagrant box that will be used is **codeyourinfra/monitor**, instead of the default **minimal/trusty64**.
 
-In the **codeyourinfra/monitor** Vagrant box there are already all the tools used by the solution, so it's needless to provision from the scratch, as the **minimal/trusty64** Vagrant box requires. Despite the fact the **codeyourinfra/monitor** Vagrant box is bigger than the **minimal/trusty64** Vagrant box, it is much faster to boot up, as shown by the comparison table below:
+The tools used by the solution have already been installed in the **codeyourinfra/monitor** Vagrant box, so it's needless to provision it from the scratch, like the **minimal/trusty64** Vagrant box requires. Despite the fact the **codeyourinfra/monitor** Vagrant box is bigger than the **minimal/trusty64** Vagrant box, and it takes longer to download, it is much faster to boot up, as shown by the comparison table below:
 
+PROVISIONING_OPTION | Vagrant box | Size (Mb) | Boot up duration (min)
+------------------- | ----------- | --------- | ----------------------
+fried (default) | [minimal/trusty64](https://app.vagrantup.com/minimal/boxes/trusty64/versions/14.04.3) | 271 | 5
+baked | [codeyourinfra/monitor](https://app.vagrantup.com/codeyourinfra/boxes/monitor/versions/1.0) | 322 | 1
 
+In order to check the durations, set the **APPEND_TIMESTAMP** environment variable to **true**. Then turn on the **monitoring server** twice, each time with a provisoning option. You will be able to follow how long the boot up takes through the `$ vagrant up monitor` command output. More details you can find in the Codeyourinfra project blog post []().
