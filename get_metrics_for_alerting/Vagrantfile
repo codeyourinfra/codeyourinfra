@@ -1,14 +1,28 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+load '../common/timestamp-appender.rb'
+
+provisioning_option = ENV['PROVISIONING_OPTION'] || 'fried'
+if provisioning_option != 'baked' && provisioning_option != 'fried'
+  puts 'PROVISIONING_OPTION must be \'baked\' or \'fried\'.'
+  abort
+end
+
 Vagrant.configure("2") do |config|
   config.vm.box = "minimal/trusty64"
 
   config.vm.define "monitor" do |monitor|
+    if provisioning_option == 'baked'
+      monitor.vm.box = "codeyourinfra/monitor"
+    end
     monitor.vm.hostname = "monitor.local"
     monitor.vm.network "private_network", ip: "192.168.33.10"
     monitor.vm.provision "ansible" do |ansible|
       ansible.playbook = "playbook-monitor.yml"
+      if provisioning_option == 'baked'
+        ansible.raw_arguments = ["--skip-tags=installation"]
+      end
     end
   end
 
