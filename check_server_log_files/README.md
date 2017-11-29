@@ -43,4 +43,6 @@ PROVISIONING_OPTION | Vagrant box | Size (Mb) | Boot up duration (min)
 fried (default) | [minimal/trusty64](https://app.vagrantup.com/minimal/boxes/trusty64/versions/14.04.3) | 271 | 8
 baked | [codeyourinfra/jenkins](https://app.vagrantup.com/codeyourinfra/boxes/jenkins/versions/1.0) | 752 | 1
 
-In order to check the durations, set the **APPEND_TIMESTAMP** environment variable to **true**. Then turn on the **jenkins server** twice, each time with a provisoning option. You will be able to follow how long the boot up takes through the `$ vagrant up` command output. More details you can find in the Codeyourinfra project blog post []().
+In order to check the durations, set the **APPEND_TIMESTAMP** environment variable to **true**. Then turn on the **jenkins server** twice, each time with a provisoning option. You will be able to follow how long the boot up takes through the `$ vagrant up` command output.
+
+More details you can find in the Codeyourinfra project blog post [Choosing between baked and fried provisioning](http://codeyourinfra.today/choosing-between-baked-and-fried-provisioning).
