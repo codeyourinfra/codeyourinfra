@@ -7,9 +7,9 @@
   - alias: /logs/jenkins
   - conf: jenkins-logs.conf
   tasks:
-  - name: Install Apache 2
+  - name: Install Apache 2.4.7
     apt:
-      name: apache2
+      name: apache2=2.4.7-1ubuntu4.18
       update_cache: yes
   - name: Config Apache logs
     template:

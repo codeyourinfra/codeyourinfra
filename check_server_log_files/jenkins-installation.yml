@@ -5,6 +5,6 @@
 - name: Add the Jenkins repository into sources list
   apt_repository:
     repo: deb https://pkg.jenkins.io/debian-stable binary/
-- name: Install Jenkins
+- name: Install Jenkins 2.73.3
   apt:
-    name: jenkins
+    name: jenkins=2.73.3
