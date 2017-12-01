@@ -13,14 +13,17 @@
     include_tasks: influxdb-installation.yml
     tags:
       - installation
-  - name: Install Grafana
+      - influxdb-installation
+  - name: Install Grafana 4.6.2
     include_tasks: grafana-installation.yml
     tags:
       - installation
+      - grafana-installation
   - name: Install Ansible
     include_tasks: ansible-installation.yml
     tags:
       - installation
+      - ansible-installation
   - name: Configure monitoring
     include_tasks: monitoring-configuration.yml
     tags:

@@ -5,9 +5,9 @@
 - name: Add the Grafana repository into sources list
   apt_repository:
     repo: deb https://packagecloud.io/grafana/testing/debian/ jessie main
-- name: Install Grafana
+- name: Install Grafana 4.6.2
   apt:
-    name: grafana
+    name: grafana=4.6.2
 - name: Ensure Grafana is running (and enable it at boot)
   service:
     name: grafana-server
