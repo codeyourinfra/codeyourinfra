@@ -16,9 +16,17 @@
     ec2_eni:
       description: Network Interface for EC2 instances managed by Vagrant
       region: sa-east-1
+      private_ip_address: 172.31.12.226
       subnet_id: subnet-655c3902
       security_groups: vagrant
   - name: Create the key pairs
     ec2_key:
       name: codeyourinfra-aws
       region: sa-east-1
+    register: ec2_key_result
+  - name: Store the private key
+    copy:
+      content: '{{ec2_key_result.key.private_key}}'
+      dest: ./codeyourinfra-aws.pem
+      mode: 0400
+    when: ec2_key_result.key.private_key is defined
