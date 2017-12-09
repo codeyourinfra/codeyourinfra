@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+  - name: Create the Vagrant security group
+    ec2_group:
+      name: vagrant
+      description: Security Group for EC2 instances managed by Vagrant
+      region: sa-east-1
+      rules:
+        - proto: tcp
+          ports: 22
+          cidr_ip: 0.0.0.0/0
+  - name: Create the Network Interface
+    ec2_eni:
+      description: Network Interface for EC2 instances managed by Vagrant
+      region: sa-east-1
+      subnet_id: subnet-655c3902
+      security_groups: vagrant
+  - name: Create the key pairs
+    ec2_key:
+      name: codeyourinfra-aws
+      region: sa-east-1
