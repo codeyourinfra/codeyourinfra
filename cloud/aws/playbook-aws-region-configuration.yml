@@ -1,28 +1,40 @@
 ---
 - hosts: localhost
   connection: local
-  gather_facts: False
+  gather_facts: false
+  vars:
+    aws_region: sa-east-1
   tasks:
   - name: Create the Vagrant security group
     ec2_group:
       name: vagrant
       description: Security Group for EC2 instances managed by Vagrant
-      region: sa-east-1
+      region: '{{aws_region}}'
       rules:
         - proto: tcp
           ports: 22
           cidr_ip: 0.0.0.0/0
+    register: ec2_group_result
+  - name: Store the security group's data
+    copy:
+      content: '{{ec2_group_result|to_nice_json}}'
+      dest: ./vagrant-security-group.json
   - name: Create the Network Interface
     ec2_eni:
       description: Network Interface for EC2 instances managed by Vagrant
-      region: sa-east-1
+      region: '{{aws_region}}'
       private_ip_address: 172.31.12.226
       subnet_id: subnet-655c3902
       security_groups: vagrant
+    register: ec2_eni_result
+  - name: Store the network interface's data
+    copy:
+      content: '{{ec2_eni_result.interface|to_nice_json}}'
+      dest: ./network-interface.json
   - name: Create the key pairs
     ec2_key:
       name: codeyourinfra-aws
-      region: sa-east-1
+      region: '{{aws_region}}'
     register: ec2_key_result
   - name: Store the private key
     copy:
@@ -30,3 +42,16 @@
       dest: ./codeyourinfra-aws.pem
       mode: 0400
     when: ec2_key_result.key.private_key is defined
+  - name: Find Ubuntu Server 14.04 LTS AMIs
+    ec2_ami_find:
+      name: 'ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*'
+      region: '{{aws_region}}'
+      sort: name
+      sort_order: descending
+      sort_end: 1
+    register: ec2_ami_find_result
+  - name: Store Ubuntu AMIs data
+    copy:
+      content: '{{ec2_ami_find_result.results[0]|to_nice_json}}'
+      dest: ./ubuntu-trusty-14.04-amd64-server.json
+    when: ec2_ami_find_result.results[0] is defined
