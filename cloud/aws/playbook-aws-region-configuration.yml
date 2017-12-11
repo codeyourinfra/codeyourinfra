@@ -5,11 +5,16 @@
   vars:
     aws_region: sa-east-1
   tasks:
+  - name: Get the VPCs
+    ec2_vpc_net_facts:
+      region: '{{aws_region}}'
+    register: ec2_vpc_net_facts_results
   - name: Create the Vagrant security group
     ec2_group:
       name: vagrant
       description: Security Group for EC2 instances managed by Vagrant
       region: '{{aws_region}}'
+      vpc_id: '{{(ec2_vpc_net_facts_results|json_query("vpcs[?is_default].id"))[0]}}'
       rules:
         - proto: tcp
           ports: 22
@@ -19,12 +24,18 @@
     copy:
       content: '{{ec2_group_result|to_nice_json}}'
       dest: ./vagrant-security-group.json
+  - name: Get the default VPC subnets
+    ec2_vpc_subnet_facts:
+      region: '{{aws_region}}'
+      filters:
+        vpc-id: '{{ec2_group_result.vpc_id}}'
+    register: ec2_vpc_subnet_facts_results
   - name: Create the Network Interface
     ec2_eni:
       description: Network Interface for EC2 instances managed by Vagrant
       region: '{{aws_region}}'
       private_ip_address: 172.31.12.226
-      subnet_id: subnet-655c3902
+      subnet_id: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0].id}}'
       security_groups: vagrant
     register: ec2_eni_result
   - name: Store the network interface's data

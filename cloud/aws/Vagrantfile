@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "test#{i}" do |test|
       test.vm.provider "aws" do |aws, override|
+        aws.aws_profile = "vagrantDev"
         aws.region = "sa-east-1"
         aws.ami = ubuntu_ami['ami_id']
         aws.instance_type = "t2.micro"
