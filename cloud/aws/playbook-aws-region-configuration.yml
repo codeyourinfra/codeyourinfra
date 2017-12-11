@@ -33,19 +33,20 @@
       dest: ./network-interface.json
   - name: Create the key pairs
     ec2_key:
-      name: codeyourinfra-aws
+      name: codeyourinfra-aws-key
       region: '{{aws_region}}'
     register: ec2_key_result
   - name: Store the private key
     copy:
       content: '{{ec2_key_result.key.private_key}}'
-      dest: ./codeyourinfra-aws.pem
+      dest: ./codeyourinfra-aws-key.pem
       mode: 0400
     when: ec2_key_result.key.private_key is defined
   - name: Find Ubuntu Server 14.04 LTS AMIs
     ec2_ami_find:
       name: 'ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*'
       region: '{{aws_region}}'
+      owner: 099720109477
       sort: name
       sort_order: descending
       sort_end: 1
