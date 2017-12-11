@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   vars:
-    aws_region: us-east-1
+    aws_region: sa-east-1
   tasks:
   - name: Get the VPCs
     ec2_vpc_net_facts:
