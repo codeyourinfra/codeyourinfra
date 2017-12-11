@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   vars:
-    aws_region: sa-east-1
+    aws_region: us-east-1
   tasks:
   - name: Get the VPCs
     ec2_vpc_net_facts:
@@ -30,11 +30,11 @@
       filters:
         vpc-id: '{{ec2_group_result.vpc_id}}'
     register: ec2_vpc_subnet_facts_results
-  - name: Create the Network Interface
+  - name: Create the Network Interface (requires netaddr Python library)
     ec2_eni:
       description: Network Interface for EC2 instances managed by Vagrant
       region: '{{aws_region}}'
-      private_ip_address: 172.31.12.226
+      private_ip_address: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0].cidr_block|ipaddr("net")|ipaddr("10")|ipaddr("address")}}'
       subnet_id: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0].id}}'
       security_groups: vagrant
     register: ec2_eni_result
