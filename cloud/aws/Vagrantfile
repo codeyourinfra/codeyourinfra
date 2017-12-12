@@ -1,9 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-security_group  = JSON.parse(File.read("vagrant-security-group.json"))
-network_interface = JSON.parse(File.read("network-interface.json"))
-ubuntu_ami = JSON.parse(File.read("ubuntu-trusty-14.04-amd64-server.json"))
+aws_region = ENV['AWS_REGION'] || ENV['EC2_REGION'] || "sa-east-1"
+security_group  = JSON.parse(File.read(File.join(aws_region, "vagrant-security-group.json")))
+network_interface = JSON.parse(File.read(File.join(aws_region, "network-interface.json")))
+ubuntu_ami = JSON.parse(File.read(File.join(aws_region, "ubuntu-trusty-14.04-amd64-server.json")))
 
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
@@ -13,7 +14,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "test#{i}" do |test|
       test.vm.provider "aws" do |aws, override|
         aws.aws_profile = "vagrantDev"
-        aws.region = "sa-east-1"
+        aws.region = aws_region
         aws.ami = ubuntu_ami['ami_id']
         aws.instance_type = "t2.micro"
         aws.keypair_name = "codeyourinfra-aws-key"
@@ -21,7 +22,7 @@ Vagrant.configure("2") do |config|
         aws.subnet_id = network_interface['subnet_id']
         aws.tags = {"Name" => "test#{i}"}
         override.ssh.username = "ubuntu"
-        override.ssh.private_key_path = "codeyourinfra-aws-key.pem"
+        override.ssh.private_key_path = File.join(aws_region, "codeyourinfra-aws-key.pem")
         override.nfs.functional = false
       end
     end

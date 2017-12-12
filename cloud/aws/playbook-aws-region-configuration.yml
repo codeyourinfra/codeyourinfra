@@ -2,9 +2,16 @@
 - hosts: localhost
   connection: local
   gather_facts: false
-  vars:
-    aws_region: sa-east-1
+  vars_prompt:
+    - name: "aws_region"
+      prompt: "AWS Region"
+      default: "sa-east-1"
+      private: no
   tasks:
+  - name: Create the AWS directory if it doesn't exist
+    file:
+      path: '{{aws_region}}'
+      state: directory
   - name: Get the VPCs
     ec2_vpc_net_facts:
       region: '{{aws_region}}'
@@ -14,16 +21,18 @@
       name: vagrant
       description: Security Group for EC2 instances managed by Vagrant
       region: '{{aws_region}}'
-      vpc_id: '{{(ec2_vpc_net_facts_results|json_query("vpcs[?is_default].id"))[0]}}'
+      vpc_id: '{{default_vpc.id}}'
       rules:
         - proto: tcp
           ports: 22
           cidr_ip: 0.0.0.0/0
+    vars:
+      default_vpc: '{{(ec2_vpc_net_facts_results|json_query("vpcs[?is_default]"))[0]}}'
     register: ec2_group_result
   - name: Store the security group's data
     copy:
       content: '{{ec2_group_result|to_nice_json}}'
-      dest: ./vagrant-security-group.json
+      dest: '{{aws_region}}/vagrant-security-group.json'
   - name: Get the default VPC subnets
     ec2_vpc_subnet_facts:
       region: '{{aws_region}}'
@@ -34,14 +43,16 @@
     ec2_eni:
       description: Network Interface for EC2 instances managed by Vagrant
       region: '{{aws_region}}'
-      private_ip_address: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0].cidr_block|ipaddr("net")|ipaddr("10")|ipaddr("address")}}'
-      subnet_id: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0].id}}'
+      private_ip_address: '{{first_subnet.cidr_block|ipaddr("net")|ipaddr("10")|ipaddr("address")}}'
+      subnet_id: '{{first_subnet.id}}'
       security_groups: vagrant
+    vars:
+      first_subnet: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0]}}'
     register: ec2_eni_result
   - name: Store the network interface's data
     copy:
       content: '{{ec2_eni_result.interface|to_nice_json}}'
-      dest: ./network-interface.json
+      dest: '{{aws_region}}/network-interface.json'
   - name: Create the key pairs
     ec2_key:
       name: codeyourinfra-aws-key
@@ -50,7 +61,7 @@
   - name: Store the private key
     copy:
       content: '{{ec2_key_result.key.private_key}}'
-      dest: ./codeyourinfra-aws-key.pem
+      dest: '{{aws_region}}/codeyourinfra-aws-key.pem'
       mode: 0400
     when: ec2_key_result.key.private_key is defined
   - name: Find Ubuntu Server 14.04 LTS AMIs
@@ -65,5 +76,5 @@
   - name: Store Ubuntu AMIs data
     copy:
       content: '{{ec2_ami_find_result.results[0]|to_nice_json}}'
-      dest: ./ubuntu-trusty-14.04-amd64-server.json
+      dest: '{{aws_region}}/ubuntu-trusty-14.04-amd64-server.json'
     when: ec2_ami_find_result.results[0] is defined
