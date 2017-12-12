@@ -32,27 +32,17 @@
   - name: Store the security group's data
     copy:
       content: '{{ec2_group_result|to_nice_json}}'
-      dest: '{{aws_region}}/vagrant-security-group.json'
-  - name: Get the default VPC subnets
+      dest: '{{aws_region}}/security-group.json'
+  - name: Get the default VPC's subnets
     ec2_vpc_subnet_facts:
       region: '{{aws_region}}'
       filters:
         vpc-id: '{{ec2_group_result.vpc_id}}'
     register: ec2_vpc_subnet_facts_results
-  - name: Create the Network Interface (requires netaddr Python library)
-    ec2_eni:
-      description: Network Interface for EC2 instances managed by Vagrant
-      region: '{{aws_region}}'
-      private_ip_address: '{{first_subnet.cidr_block|ipaddr("net")|ipaddr("10")|ipaddr("address")}}'
-      subnet_id: '{{first_subnet.id}}'
-      security_groups: vagrant
-    vars:
-      first_subnet: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0]}}'
-    register: ec2_eni_result
-  - name: Store the network interface's data
+  - name: Store the VPC subnet's data
     copy:
-      content: '{{ec2_eni_result.interface|to_nice_json}}'
-      dest: '{{aws_region}}/network-interface.json'
+      content: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0]|to_nice_json}}'
+      dest: '{{aws_region}}/subnet.json'
   - name: Create the key pairs
     ec2_key:
       name: codeyourinfra-aws-key
@@ -73,8 +63,8 @@
       sort_order: descending
       sort_end: 1
     register: ec2_ami_find_result
-  - name: Store Ubuntu AMIs data
+  - name: Store the Ubuntu AMI's data
     copy:
       content: '{{ec2_ami_find_result.results[0]|to_nice_json}}'
-      dest: '{{aws_region}}/ubuntu-trusty-14.04-amd64-server.json'
+      dest: '{{aws_region}}/ubuntu-ami.json'
     when: ec2_ami_find_result.results[0] is defined
