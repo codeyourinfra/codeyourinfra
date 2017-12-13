@@ -24,7 +24,9 @@
       vpc_id: '{{default_vpc.id}}'
       rules:
         - proto: tcp
-          ports: 22
+          ports:
+            - 22
+            - 80
           cidr_ip: 0.0.0.0/0
     vars:
       default_vpc: '{{(ec2_vpc_net_facts_results|json_query("vpcs[?is_default]"))[0]}}'
