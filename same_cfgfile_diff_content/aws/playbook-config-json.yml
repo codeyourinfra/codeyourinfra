@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aws_region: sa-east-1
+    qa1_query: "[?tags.Name=='qa1'].private_ip_address"
+    qa2_query: "[?tags.Name=='qa2'].private_ip_address"
+    qa3_query: "[?tags.Name=='qa3'].private_ip_address"
+  tasks:
+  - name: Gather facts about EC2 instances managed by Vagrant
+    ec2_instance_facts:
+      region: '{{aws_region}}'
+      filters:
+        instance.group-name: vagrant
+        "tag:Role": qa
+    register: ec2_instance_facts_result
+  - name: Copy the default configuration JSON file
+    copy:
+      src: ../config.json
+      dest: ./config.json
+  - name: Replace the QA servers hostnames
+    replace:
+      path: ./config.json
+      regexp: '{{item.regexp}}'
+      replace: '{{item.replace}}'
+    with_items:
+      - {regexp: "\"qa1\"", replace: "\"ip-{{qa1_ip_address|regex_replace('\\.', '-')}}\""}
+      - {regexp: "\"qa2\"", replace: "\"ip-{{qa2_ip_address|regex_replace('\\.', '-')}}\""}
+      - {regexp: "\"qa3\"", replace: "\"ip-{{qa3_ip_address|regex_replace('\\.', '-')}}\""}
+    vars:
+      qa1_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa1_query))[0]}}'
+      qa2_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa2_query))[0]}}'
+      qa3_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa3_query))[0]}}'

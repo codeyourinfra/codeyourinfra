@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aws_region: sa-east-1
+    qa1_query: "[?tags.Name=='qa1'].public_ip_address"
+    qa2_query: "[?tags.Name=='qa2'].public_ip_address"
+    qa3_query: "[?tags.Name=='qa3'].public_ip_address"
+  tasks:
+  - name: Gather facts about EC2 instances managed by Vagrant
+    ec2_instance_facts:
+      region: '{{aws_region}}'
+      filters:
+        instance.group-name: vagrant
+        "tag:Role": qa
+    register: ec2_instance_facts_result
+  - name: Save ec2 instances inventory file
+    template:
+      src: ec2_hosts_template
+      dest: ./ec2_hosts
+    vars:
+      qa1_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa1_query))[0]}}'
+      qa2_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa2_query))[0]}}'
+      qa3_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa3_query))[0]}}'

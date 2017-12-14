@@ -3,7 +3,8 @@
   become: yes
   vars:
     hostname: "{{ansible_hostname}}"
-    config: "{{lookup('file', 'config.json')}}"
+    file: "{{config_file|default('config.json')}}"
+    config: "{{lookup('file', '{{file}}')}}"
     items_query: "[?host=='{{hostname}}'].items"
   tasks:
   - name: Set the configuration file content
