@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aws_region: sa-east-1
+  tasks:
+  - name: Gather facts about EC2 instances managed by Vagrant
+    ec2_instance_facts:
+      region: '{{aws_region}}'
+      filters:
+        instance.group-name: vagrant
+        "tag:Name": jenkins
+    register: ec2_instance_facts_result
+  - name: Save ec2 instances inventory file
+    template:
+      src: ec2_hosts_template
+      dest: ./ec2_hosts
+    vars:
+      jenkins_ip_address: '{{ec2_instance_facts_result.instances[0].public_ip_address}}'
