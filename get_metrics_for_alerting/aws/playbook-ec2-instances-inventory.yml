@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aws_region: sa-east-1
+    monitor_query: "[?tags.Name=='monitor'].public_ip_address"
+    server1_query: "[?tags.Name=='server1'].public_ip_address"
+    server2_query: "[?tags.Name=='server2'].public_ip_address"
+  tasks:
+  - name: Gather facts about EC2 instances managed by Vagrant
+    ec2_instance_facts:
+      region: '{{aws_region}}'
+      filters:
+        instance.group-name: vagrant
+    register: ec2_instance_facts_result
+  - name: Save ec2 instances inventory file
+    template:
+      src: ec2_hosts_template
+      dest: ./ec2_hosts
+    vars:
+      monitor_ip_address: '{{(ec2_instance_facts_result.instances|json_query(monitor_query))[0]}}'
+      server1_ip_address: '{{(ec2_instance_facts_result.instances|json_query(server1_query))[0]}}'
+      server2_ip_address: '{{(ec2_instance_facts_result.instances|json_query(server2_query))[0]}}'

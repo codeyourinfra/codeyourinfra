@@ -1,14 +1,24 @@
 ---
 - hosts: monitor
   become: yes
-  gather_facts: no
   tasks:
-  - name: Install apt-transport-https (required for the apt_repository task)
+  - name: Install required packages
     apt:
-      name: apt-transport-https
+      name: '{{item}}'
       update_cache: yes
+    with_items:
+      - apt-transport-https
+      - python-setuptools
     tags:
       - installation
+  - name: Install required Python modules
+    easy_install:
+      name: '{{item}}'
+    with_items:
+      - urllib3
+      - pyOpenSSL
+      - ndg-httpsclient
+      - pyasn1
   - name: Install InfluxDB
     include_tasks: influxdb-installation.yml
     tags:
