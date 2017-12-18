@@ -3,7 +3,7 @@
   tasks:
   - name: Used memory percentage
     uri:
-      url: http://[%ansible_eth0.ipv4.address%]:8086/write?db=monitor
+      url: http://[% ansible_eth1.ipv4.address if ansible_eth1 is defined else ansible_eth0.ipv4.address %]:8086/write?db=monitor
       method: POST
       body: "used_mem_pct,host={{ansible_hostname}} value={{ansible_memory_mb.real.used / ansible_memory_mb.real.total * 100}}"
       status_code: 204

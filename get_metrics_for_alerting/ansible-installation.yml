@@ -7,3 +7,6 @@
   file:
     path: /etc/ansible
     state: directory
+- name: Install sshpass
+  apt:
+    name: sshpass
