@@ -31,7 +31,7 @@
     tags:
       - installation
       - grafana-installation
-  - name: Install Ansible
+  - name: Install Ansible 2.4.1.0
     include_tasks: ansible-installation.yml
     tags:
       - installation

@@ -40,6 +40,7 @@
 - name: Add localhost to Ansible inventory
   blockinfile:
     path: /etc/ansible/hosts
+    create: yes
     block: |
       [monitored_servers]
       localhost ansible_connection=local
@@ -65,4 +66,4 @@
 - name: Get metrics from monitored servers every minute
   cron:
     name: "get metrics"
-    job: "ansible-playbook /etc/ansible/playbooks/playbook-get-metrics.yml"
+    job: "/usr/local/bin/ansible-playbook /etc/ansible/playbooks/playbook-get-metrics.yml > /etc/ansible/playbooks/playbook-get-metrics.log 2>&1"
