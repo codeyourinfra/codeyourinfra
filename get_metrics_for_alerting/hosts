@@ -1,5 +1,5 @@
 [monitor]
-192.168.33.10 ansible_ssh_private_key_file=.vagrant/machines/monitor/virtualbox/private_key
+192.168.33.10 ansible_ssh_pass=vagrant
 
 [servers]
 server1 ansible_host=192.168.33.20 ansible_ssh_private_key_file=.vagrant/machines/server1/virtualbox/private_key

@@ -25,8 +25,8 @@ VMs OS | Ubuntu 14.04.3 LTS
 Vagrant | 2.0.0
 VirtualBox | 5.1.30
 VirtualBox Extension Pack | 5.1.28
-Ansible | 2.4.0.0
-InfluxDB | 1.3.7
+Ansible | 2.4.1.0
+InfluxDB | 1.4.2
 Grafana | 4.6.2
 
 In addition, the test requires Internet connection, for the **minimal/trusty64** Vagrant box downloading. Depending on the Internet connection speed, the test environment can last more than you expect to be up and running, specially for the first time.
