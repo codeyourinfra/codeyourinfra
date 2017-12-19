@@ -3,7 +3,9 @@
   connection: local
   gather_facts: false
   vars:
-    aws_region: sa-east-1
+    env_aws_region: "{{lookup('env', 'AWS_REGION')}}"
+    env_ec2_region: "{{lookup('env', 'EC2_REGION')}}"
+    aws_region: "{{env_aws_region if env_aws_region != '' else env_ec2_region if env_ec2_region != '' else 'sa-east-1'}}"
     qa1_query: "[?tags.Name=='qa1'].private_ip_address"
     qa2_query: "[?tags.Name=='qa2'].private_ip_address"
     qa3_query: "[?tags.Name=='qa3'].private_ip_address"
@@ -14,11 +16,13 @@
       filters:
         instance.group-name: vagrant
         "tag:Role": qa
+        "tag:Solution": same_cfgfile_diff_content
     register: ec2_instance_facts_result
   - name: Copy the default configuration JSON file
     copy:
       src: ../config.json
       dest: ./config.json
+    when: ec2_instance_facts_result.instances|length == 3
   - name: Replace the QA servers hostnames
     replace:
       path: ./config.json
@@ -32,3 +36,4 @@
       qa1_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa1_query))[0]}}'
       qa2_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa2_query))[0]}}'
       qa3_ip_address: '{{(ec2_instance_facts_result.instances|json_query(qa3_query))[0]}}'
+    when: ec2_instance_facts_result.instances|length == 3
