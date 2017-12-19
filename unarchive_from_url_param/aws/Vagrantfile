@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
         aws.keypair_name = "codeyourinfra-aws-key"
         aws.security_groups = security_group['group_id']
         aws.subnet_id = subnet['id']
-        aws.tags = {"Name" => ec2_instance["name"], "Role" => ec2_instance["role"]}
+        aws.tags = {"Name" => ec2_instance["name"], "Role" => ec2_instance["role"], "Solution" => "unarchive_from_url_param"}
         override.ssh.username = "ubuntu"
         override.ssh.private_key_path = File.join(relative_path, "codeyourinfra-aws-key.pem")
         override.nfs.functional = false
