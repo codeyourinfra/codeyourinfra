@@ -3,7 +3,17 @@
 
 load File.join("..", "..", "common", "timestamp-appender.rb")
 
-aws_region = ENV['AWS_REGION'] || ENV['EC2_REGION'] || "sa-east-1"
+provisioning_option = ENV['PROVISIONING_OPTION'] || "fried"
+if provisioning_option != "baked" && provisioning_option != "fried"
+  puts 'PROVISIONING_OPTION must be \'baked\' or \'fried\'.'
+  abort
+end
+
+if provisioning_option == "baked"
+  aws_region = "sa-east-1"
+else
+  aws_region = ENV['AWS_REGION'] || ENV['EC2_REGION'] || "sa-east-1"
+end
 relative_path = File.join("..", "..", "cloud", "aws", aws_region)
 security_group  = JSON.parse(File.read(File.join(relative_path, "security-group.json")))
 subnet = JSON.parse(File.read(File.join(relative_path, "subnet.json")))
@@ -19,7 +29,11 @@ Vagrant.configure("2") do |config|
     config.vm.define ec2_instance["name"] do |ec2_config|
       ec2_config.vm.provider "aws" do |aws, override|
         aws.region = aws_region
-        aws.ami = ubuntu_ami['ami_id']
+        if ec2_instance["name"] == "monitor" && provisioning_option == "baked"
+          aws.ami = "ami-e56a2b89"
+        else
+          aws.ami = ubuntu_ami['ami_id']
+        end
         aws.instance_type = "t2.micro"
         aws.keypair_name = "codeyourinfra-aws-key"
         aws.security_groups = security_group['group_id']
@@ -32,6 +46,9 @@ Vagrant.configure("2") do |config|
       if ec2_instance["name"] == "monitor"
         ec2_config.vm.provision "ansible" do |ansible|
           ansible.playbook = File.join("..", "playbook-monitor.yml")
+          if provisioning_option == "baked"
+            ansible.raw_arguments = ["--skip-tags=installation"]
+          end
         end
       end
     end
