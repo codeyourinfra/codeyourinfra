@@ -22,7 +22,7 @@ In order to get the right **params.json** file, you must then run `$ ansible-pla
 
 #### 5. Testing
 
-Finally, execute `$ ansible-playbook ../playbook-servers-yml -i ec2_hosts -e "params_file=aws/params.json"`. Notice that you now pass the parameters file's path as a parameter itself. The compressed files are so extracted in both servers (**server1** and **server2**) in just one shot.
+Finally, execute `$ ansible-playbook ../playbook-servers.yml -i ec2_hosts -e "params_file=aws/params.json"`. Notice that you now pass the parameters file's path as a parameter itself. The compressed files are so extracted in both servers (**server1** and **server2**) in just one shot.
 
 #### 6. Validation
 
