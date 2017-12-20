@@ -14,7 +14,7 @@ The Vagrant commands will also take into consideration the **APPEND_TIMESTAMP** 
 
 #### 3. Inventory
 
-Right after the EC2 instances creation, run `$ ansible-playbook playbook-ec2-instances-inventory.yml`. The **ec2_hosts** file is so generated with the correct **jenkins** server's IP addresses.
+Right after the EC2 instances creation, run `$ ansible-playbook playbook-ec2-instances-inventory.yml`. The **ec2_hosts** file is so generated with the correct **jenkins** server's IP address.
 
 #### 4. Testing
 
