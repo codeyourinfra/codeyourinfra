@@ -26,4 +26,4 @@ Finally, execute `$ ansible-playbook ../playbook.yml -i ec2_hosts -e "config_fil
 
 #### 6. Validation
 
-To validate, run `$ ansible qa -i ec2_hosts -m shell -a "cat /etc/conf"`. The value of **prop1** in the configuration file of the **qa1** server must be **A**, in the same file of the **qa2** server must be **C**, and in the same file of the **qa2** server must be **E**.
+To validate, run `$ ansible qa -i ec2_hosts -m shell -a "cat /etc/conf"`. The value of **prop1** in the configuration file of the **qa1** server must be **A**, in the same file of the **qa2** server must be **C**, and in the same file of the **qa3** server must be **E**.
