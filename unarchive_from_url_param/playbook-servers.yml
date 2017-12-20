@@ -3,7 +3,8 @@
   become: yes
   vars:
     hostname: "{{ansible_hostname}}"
-    params: "{{lookup('file', 'params.json')}}"
+    file: "{{params_file|default('params.json')}}"
+    params: "{{lookup('file', '{{file}}')}}"
     url_query: "[?host=='{{hostname}}'].url"
     url_param: "{{(params|json_query(url_query))[0]}}"
     target_query: "[?host=='{{hostname}}'].target"

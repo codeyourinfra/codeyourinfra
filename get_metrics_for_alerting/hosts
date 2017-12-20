@@ -1,2 +1,13 @@
 [monitor]
-192.168.33.10
+192.168.33.10 ansible_ssh_pass=vagrant
+
+[servers]
+server1 ansible_host=192.168.33.20 ansible_ssh_private_key_file=.vagrant/machines/server1/virtualbox/private_key
+server2 ansible_host=192.168.33.30 ansible_ssh_private_key_file=.vagrant/machines/server2/virtualbox/private_key
+
+[local_instances:children]
+monitor
+servers
+
+[local_instances:vars]
+ansible_user=vagrant

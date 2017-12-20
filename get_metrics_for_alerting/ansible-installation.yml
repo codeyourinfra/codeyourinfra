@@ -1,10 +1,12 @@
 ---
-- name: Install software-properties-common
-  apt:
-    name: software-properties-common
-- name: Add the Ansible repository
-  apt_repository:
-    repo: "ppa:ansible/ansible"
-- name: Install Ansible
-  apt:
+- name: Install Ansible 2.4.1.0
+  pip:
     name: ansible
+    version: 2.4.1.0
+- name: Create the Ansible directory if it doesn't exist
+  file:
+    path: /etc/ansible
+    state: directory
+- name: Install sshpass
+  apt:
+    name: sshpass

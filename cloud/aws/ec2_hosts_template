@@ -1,0 +1,6 @@
+[ec2_instances]
+
+[ec2_instances:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file={{aws_region}}/codeyourinfra-aws-key.pem
+ansible_ssh_extra_args="-o StrictHostKeyChecking=no"

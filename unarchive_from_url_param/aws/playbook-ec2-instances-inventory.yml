@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    env_aws_region: "{{lookup('env', 'AWS_REGION')}}"
+    env_ec2_region: "{{lookup('env', 'EC2_REGION')}}"
+    aws_region: "{{env_aws_region if env_aws_region != '' else env_ec2_region if env_ec2_region != '' else 'sa-east-1'}}"
+    repo_query: "[?tags.Name=='repo'].public_ip_address"
+    server1_query: "[?tags.Name=='server1'].public_ip_address"
+    server2_query: "[?tags.Name=='server2'].public_ip_address"
+  tasks:
+  - name: Check if the private key exists
+    stat:
+      path: ../../cloud/aws/{{aws_region}}/codeyourinfra-aws-key.pem
+    register: stat_result
+  - name: Stop the execution if the private key does not exist
+    fail:
+      msg: "The private key for the region {{aws_region}} does not exist. Please run the playbook-aws-region-configuration.yml before."
+    when: not stat_result.stat.exists
+  - name: Gather facts about EC2 instances managed by Vagrant
+    ec2_instance_facts:
+      region: '{{aws_region}}'
+      filters:
+        instance.group-name: vagrant
+        "tag:Solution": unarchive_from_url_param
+    register: ec2_instance_facts_result
+  - name: Save ec2 instances inventory file
+    template:
+      src: ec2_hosts_template
+      dest: ./ec2_hosts
+    vars:
+      repo_ip_address: '{{(ec2_instance_facts_result.instances|json_query(repo_query))[0]}}'
+      server1_ip_address: '{{(ec2_instance_facts_result.instances|json_query(server1_query))[0]}}'
+      server2_ip_address: '{{(ec2_instance_facts_result.instances|json_query(server2_query))[0]}}'
+    when: ec2_instance_facts_result.instances|length == 3

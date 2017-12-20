@@ -1,0 +1,38 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    env_aws_region: "{{lookup('env', 'AWS_REGION')}}"
+    env_ec2_region: "{{lookup('env', 'EC2_REGION')}}"
+    aws_region: "{{env_aws_region if env_aws_region != '' else env_ec2_region if env_ec2_region != '' else 'sa-east-1'}}"
+    repo_query: "[?tags.Name=='repo'].public_ip_address"
+    server1_query: "[?tags.Name=='server1'].private_ip_address"
+    server2_query: "[?tags.Name=='server2'].private_ip_address"
+  tasks:
+  - name: Gather facts about EC2 instances managed by Vagrant
+    ec2_instance_facts:
+      region: '{{aws_region}}'
+      filters:
+        instance.group-name: vagrant
+        "tag:Solution": unarchive_from_url_param
+    register: ec2_instance_facts_result
+  - name: Copy the default parameters JSON file
+    copy:
+      src: ../params.json
+      dest: ./params.json
+    when: ec2_instance_facts_result.instances|length == 3
+  - name: Replace the repo IP address and the servers hostnames
+    replace:
+      path: ./params.json
+      regexp: '{{item.regexp}}'
+      replace: '{{item.replace}}'
+    with_items:
+      - {regexp: "192\\.168\\.33\\.10", replace: "{{repo_ip_address}}"}
+      - {regexp: "\"server1\"", replace: "\"ip-{{server1_ip_address|regex_replace('\\.', '-')}}\""}
+      - {regexp: "\"server2\"", replace: "\"ip-{{server2_ip_address|regex_replace('\\.', '-')}}\""}
+    vars:
+      repo_ip_address: '{{(ec2_instance_facts_result.instances|json_query(repo_query))[0]}}'
+      server1_ip_address: '{{(ec2_instance_facts_result.instances|json_query(server1_query))[0]}}'
+      server2_ip_address: '{{(ec2_instance_facts_result.instances|json_query(server2_query))[0]}}'
+    when: ec2_instance_facts_result.instances|length == 3

@@ -1,0 +1,75 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_prompt:
+    - name: "aws_region"
+      prompt: "AWS Region"
+      default: "sa-east-1"
+      private: no
+  tasks:
+  - name: Create the AWS directory if it doesn't exist
+    file:
+      path: '{{aws_region}}'
+      state: directory
+  - name: Get the VPCs
+    ec2_vpc_net_facts:
+      region: '{{aws_region}}'
+    register: ec2_vpc_net_facts_results
+  - name: Create the Vagrant security group
+    ec2_group:
+      name: vagrant
+      description: Security Group for EC2 instances managed by Vagrant
+      region: '{{aws_region}}'
+      vpc_id: '{{default_vpc.id}}'
+      rules:
+        - proto: tcp
+          ports:
+            - 22
+            - 80
+            - 3000
+            - 8080
+            - 8086
+          cidr_ip: 0.0.0.0/0
+    vars:
+      default_vpc: '{{(ec2_vpc_net_facts_results|json_query("vpcs[?is_default]"))[0]}}'
+    register: ec2_group_result
+  - name: Store the security group's data
+    copy:
+      content: '{{ec2_group_result|to_nice_json}}'
+      dest: '{{aws_region}}/security-group.json'
+  - name: Get the default VPC's subnets
+    ec2_vpc_subnet_facts:
+      region: '{{aws_region}}'
+      filters:
+        vpc-id: '{{ec2_group_result.vpc_id}}'
+    register: ec2_vpc_subnet_facts_results
+  - name: Store the VPC subnet's data
+    copy:
+      content: '{{(ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0]|to_nice_json}}'
+      dest: '{{aws_region}}/subnet.json'
+  - name: Create the key pairs
+    ec2_key:
+      name: codeyourinfra-aws-key
+      region: '{{aws_region}}'
+    register: ec2_key_result
+  - name: Store the private key
+    copy:
+      content: '{{ec2_key_result.key.private_key}}'
+      dest: '{{aws_region}}/codeyourinfra-aws-key.pem'
+      mode: 0400
+    when: ec2_key_result.key.private_key is defined
+  - name: Find Ubuntu Server 14.04 LTS AMIs
+    ec2_ami_find:
+      name: 'ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*'
+      region: '{{aws_region}}'
+      owner: 099720109477
+      sort: name
+      sort_order: descending
+      sort_end: 1
+    register: ec2_ami_find_result
+  - name: Store the Ubuntu AMI's data
+    copy:
+      content: '{{ec2_ami_find_result.results[0]|to_nice_json}}'
+      dest: '{{aws_region}}/ubuntu-ami.json'
+    when: ec2_ami_find_result.results[0] is defined

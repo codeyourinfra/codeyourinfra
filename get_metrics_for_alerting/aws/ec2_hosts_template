@@ -1,0 +1,15 @@
+[monitor]
+{{monitor_ip_address}}
+
+[servers]
+server1 ansible_host={{server1_ip_address}}
+server2 ansible_host={{server2_ip_address}}
+
+[ec2_instances:children]
+monitor
+servers
+
+[ec2_instances:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=../../cloud/aws/{{aws_region}}/codeyourinfra-aws-key.pem
+ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
