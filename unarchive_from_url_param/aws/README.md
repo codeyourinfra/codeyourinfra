@@ -12,4 +12,4 @@ In order to get the right **params.json** file, you must then run `$ ansible-pla
 
 Finally, execute `$ ansible-playbook ../playbook-servers-yml -i ec2_hosts -e "params_file=aws/params.json"`. Notice that you now pass the parameters file's path as a parameter itself. The compressed files are so extracted in both servers (**server1** and **server2**) in just one shot.
 
-To validate, run `$ ansible servers -i ec2_hosts -m shell -a "ls -la /var/target"`. There must be the Apache Maven 3.5.0 folder in the /var/target directory of server1 and the Apache Ant 1.10.1 folder in the same directory of server2.
+To validate, run `$ ansible servers -i ec2_hosts -m shell -a "ls -la /var/target"`. There must be the Apache Maven 3.5.0 folder in the /var/target directory of **server1** and the Apache Ant 1.10.1 folder in the same directory of **server2**.
