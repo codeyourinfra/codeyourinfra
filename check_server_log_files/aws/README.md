@@ -18,7 +18,7 @@ Right after the EC2 instances creation, run `$ ansible-playbook playbook-ec2-ins
 
 #### 4. Testing
 
-Finally, execute `$ ansible-playbook ../playbook-jenkins-logs.yml -i ec2_hosts`. The Jenkins' log file will so be made available through the web browser.
+Finally, execute `$ ansible-playbook ../playbook-jenkins-logs.yml -i ec2_hosts`. The Jenkins' log file is so be made available through the web browser.
 
 #### 5. Validation
 
