@@ -18,7 +18,7 @@ Right after the EC2 instances creation, run `$ ansible-playbook playbook-ec2-ins
 
 #### 4. Testing
 
-Before adding a server to the monitoring service, copy the private SSH key to the current directory: `$ copy ../../cloud/aws/<aws_region>/codeyourinfra-aws-key.pem .`, replacing *<aws_region>* by the AWS region of your choice.
+Before adding a server to the monitoring service, copy the private SSH key to the current directory: `$ cp ../../cloud/aws/<aws_region>/codeyourinfra-aws-key.pem .`, replacing *<aws_region>* by the AWS region of your choice.
 
 Finally, execute `$ ansible-playbook ../playbook-add-server.yml -i ec2_hosts -e "host=<server1_ip_address> user=ubuntu private_key=aws/codeyourinfra-aws-key.pem"`, replacing the *<server1_ip_address>* by the **server1** IP address, obtained from AWS and stored in the **ec2_hosts** file.
 
