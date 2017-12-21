@@ -18,7 +18,7 @@ In order to have the EC2 instances created by Vagrant, you must choose an [AWS r
 
 It's required to be done before the execution of `$ vagrant up`, because it creates in the chosen AWS region the **security group** and the **key pairs** that will be used by Vagrant. A **subnet** and an **Ubuntu image** are also selected, during the playbook-aws-region-configuration.yml execution, to be used by Vagrant for managing the EC2 instances.
 
-You can repeat the execution for different AWS regions. Each region will have a specific subdirectory where the required data will be stored. The only thing you must bear in mind is to initialize afterwards the environment in the region previously configured.
+You can repeat the execution for different AWS regions. Each region will have a specific subdirectory where the required data will be stored. The only thing you must bear in mind when initializing later the environment is to use the region previously configured.
 
 
 ## Vagrant AWS plugin
