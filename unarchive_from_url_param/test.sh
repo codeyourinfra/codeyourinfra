@@ -1,12 +1,18 @@
 #!/bin/sh
 
-export APPEND_TIMESTAMP=true
-export PROVISIONING_OPTION=baked
+# check the repo server provisioning
+if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
+	ansible-playbook playbook-repo.yml -i hosts --syntax-check
+	if [ $? -ne 0 ]; then
+		echo "Syntax error in playbook-repo.yml."
+		exit 1
+	fi
+fi
 
 # turn on the environment
 vagrant up
 
-# execute the solution
+# check and execute the solution
 ansible-playbook playbook-servers.yml -i hosts
 
 # validate the solution
