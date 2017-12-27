@@ -1,6 +1,6 @@
 # AWS support
 
-Since [release 1.5.0](https://github.com/esign-consulting/codeyourinfra/tree/1.5.0), the Codeyourinfra project provides AWS support. It's explained in detail in the project blog post [Bringing the Ansible development to the cloud](http://codeyourinfra.today/bringing-the-ansible-development-to-the-cloud), but you can follow the instructions below as well.
+Since the [release 1.5.0](https://github.com/esign-consulting/codeyourinfra/tree/1.5.0), the Codeyourinfra project has been providing AWS support. It's explained in detail in the project blog post [Bringing the Ansible development to the cloud](http://codeyourinfra.today/bringing-the-ansible-development-to-the-cloud), but you can follow the instructions below as well.
 
 The same local virtualized environment required for Ansible playbooks' developing and testing then can run in the cloud. The local VirtualBox VMs can be replaced by EC2 instances, if you prefer. And it can be done as simply as executing the usual command `$ vagrant up`, from the **aws** directory of any project's solution.
 

@@ -24,7 +24,7 @@ The project is totally open for collaboration, like any other open source projec
 
 ## Environment variables
 
-Since [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project provides environment variables for changing the default behaviour of the development environment initialization. They are as follows:
+Since the [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project has been providing environment variables for changing the default behaviour of the development environment initialization. They are as follows:
 
 Environment variable | Required | Default | Choices | Comments
 -------------------- | -------- | ------- | ------- | --------
