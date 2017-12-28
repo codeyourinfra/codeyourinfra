@@ -42,5 +42,5 @@ ansible servers -i ec2_hosts -m shell -a "ls /var/target"
 
 # turn off the environment and exit
 vagrant destroy -f
-rm -rf .vagrant/ ec2_hosts params.json
+rm -rf .vagrant/ ec2_hosts params.json "$tmpfile"
 exit 0
