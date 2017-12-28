@@ -29,7 +29,13 @@ if [ ! -f params.json ]; then
 fi
 
 # execute the solution
-ansible-playbook ../playbook-servers.yml -i ec2_hosts -e "params_file=aws/params.json"
+tmpfile=$(mktemp)
+ansible-playbook ../playbook-servers.yml -i ec2_hosts -e "params_file=aws/params.json" | tee -a ${tmpfile}
+success=$(tail -4 ${tmpfile} | grep -c "failed=0")
+if [ ${success} -ne 2 ]; then
+	echo "Error on playbook-servers.yml execution."
+	exit 1
+fi
 
 # validate the solution
 ansible servers -i ec2_hosts -m shell -a "ls /var/target"
