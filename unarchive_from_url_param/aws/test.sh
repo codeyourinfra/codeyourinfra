@@ -1,5 +1,11 @@
 #!/bin/sh
 
+teardown()
+{
+	vagrant destroy -f
+	rm -rf .vagrant/ *.retry ec2_hosts params.json "$tmpfile"
+}
+
 # check the repo server provisioning
 if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
 	ansible-playbook ../playbook-repo.yml -i ec2_hosts_template --syntax-check
@@ -17,6 +23,7 @@ rm -f ec2_hosts
 ansible-playbook playbook-ec2-instances-inventory.yml
 if [ ! -f ec2_hosts ]; then
 	echo "Could not generate the inventory file."
+	teardown
 	exit 1
 fi
 
@@ -25,6 +32,7 @@ rm -f params.json
 ansible-playbook playbook-params-json.yml
 if [ ! -f params.json ]; then
 	echo "Could not update the parameters file."
+	teardown
 	exit 1
 fi
 
@@ -34,6 +42,7 @@ ansible-playbook ../playbook-servers.yml -i ec2_hosts -e "params_file=aws/params
 success=$(tail -4 ${tmpfile} | grep -c "failed=0")
 if [ ${success} -ne 2 ]; then
 	echo "Error on playbook-servers.yml execution."
+	teardown
 	exit 1
 fi
 
@@ -41,6 +50,5 @@ fi
 ansible servers -i ec2_hosts -m shell -a "ls /var/target"
 
 # turn off the environment and exit
-vagrant destroy -f
-rm -rf .vagrant/ ec2_hosts params.json "$tmpfile"
+teardown
 exit 0
