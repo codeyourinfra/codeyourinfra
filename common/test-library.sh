@@ -27,3 +27,13 @@ assertEquals()
 		exit 1
 	fi
 }
+
+assertFileExists()
+{
+	FILE_PATH=$1
+	if [ ! -f $FILE_PATH ]; then
+		echo "The file $FILE_PATH does not exist"
+		teardown
+		exit 1
+	fi
+}

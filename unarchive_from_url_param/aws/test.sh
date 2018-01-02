@@ -23,11 +23,7 @@ checkPlaybookSyntax playbook-ec2-instances-inventory.yml
 # generate the inventory
 rm -f ec2_hosts
 ansible-playbook playbook-ec2-instances-inventory.yml
-if [ ! -f ec2_hosts ]; then
-	echo "Could not generate the inventory file."
-	teardown
-	exit 1
-fi
+assertFileExists ec2_hosts
 
 # check the parameters file generation playbook syntax
 checkPlaybookSyntax playbook-params-json.yml
@@ -35,11 +31,7 @@ checkPlaybookSyntax playbook-params-json.yml
 # update the parameters file
 rm -f params.json
 ansible-playbook playbook-params-json.yml
-if [ ! -f params.json ]; then
-	echo "Could not update the parameters file."
-	teardown
-	exit 1
-fi
+assertFileExists params.json
 
 # check the solution playbook syntax
 checkPlaybookSyntax ../playbook-servers.yml ec2_hosts
