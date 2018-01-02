@@ -7,17 +7,27 @@ teardown()
 	rm -rf .vagrant/ *.retry "$tmpfile"
 }
 
-# check the repo server provisioning
+. ../common/test-library.sh
+
+# check the repo server provisioning playbook syntax
 if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
-	ansible-playbook playbook-repo.yml -i hosts --syntax-check
-	if [ $? -ne 0 ]; then
-		echo "Syntax error in playbook-repo.yml."
+	playbookSyntaxCheck playbook-repo.yml hosts
+	SYNTAX_CHECK_RC=$?
+	if [ $SYNTAX_CHECK_RC -ne 0 ]; then
 		exit 1
 	fi
 fi
 
 # turn on the environment
 vagrant up
+
+# check the solution playbook syntax
+playbookSyntaxCheck playbook-servers.yml hosts
+SYNTAX_CHECK_RC=$?
+if [ $SYNTAX_CHECK_RC -ne 0 ]; then
+	teardown
+	exit 1
+fi
 
 # execute the solution
 ansible-playbook playbook-servers.yml -i hosts | tee ${tmpfile}
