@@ -4,20 +4,30 @@ tmpfile=$(mktemp)
 teardown()
 {
 	vagrant destroy -f
-	rm -rf .vagrant/ *.retry ec2_hosts params.json "$tmpfile"
+	rm -rf .vagrant/ *.retry "$tmpfile" ec2_hosts params.json
 }
+
+. ../../common/test-library.sh
 
 # check the repo server provisioning
 if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
-	ansible-playbook ../playbook-repo.yml -i ec2_hosts_template --syntax-check
-	if [ $? -ne 0 ]; then
-		echo "Syntax error in playbook-repo.yml."
+	playbookSyntaxCheck ../playbook-repo.yml ec2_hosts_template
+	SYNTAX_CHECK_RC=$?
+	if [ $SYNTAX_CHECK_RC -ne 0 ]; then
 		exit 1
 	fi
 fi
 
 # turn on the environment
 vagrant up
+
+# check the inventory generation playbook syntax
+playbookSyntaxCheck playbook-ec2-instances-inventory.yml
+SYNTAX_CHECK_RC=$?
+if [ $SYNTAX_CHECK_RC -ne 0 ]; then
+	teardown
+	exit 1
+fi
 
 # generate the inventory
 rm -f ec2_hosts
@@ -28,11 +38,27 @@ if [ ! -f ec2_hosts ]; then
 	exit 1
 fi
 
+# check the parameters file generation playbook syntax
+playbookSyntaxCheck playbook-params-json.yml
+SYNTAX_CHECK_RC=$?
+if [ $SYNTAX_CHECK_RC -ne 0 ]; then
+	teardown
+	exit 1
+fi
+
 # update the parameters file
 rm -f params.json
 ansible-playbook playbook-params-json.yml
 if [ ! -f params.json ]; then
 	echo "Could not update the parameters file."
+	teardown
+	exit 1
+fi
+
+# check the solution playbook syntax
+playbookSyntaxCheck ../playbook-servers.yml ec2_hosts
+SYNTAX_CHECK_RC=$?
+if [ $SYNTAX_CHECK_RC -ne 0 ]; then
 	teardown
 	exit 1
 fi
