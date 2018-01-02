@@ -9,16 +9,16 @@ teardown()
 
 . ../../common/test-library.sh
 
-# check the repo server provisioning
+# check the repo server provisioning playbook syntax
 if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
-	playbookSyntaxCheck ../playbook-repo.yml ec2_hosts_template
+	checkPlaybookSyntax ../playbook-repo.yml ec2_hosts_template
 fi
 
 # turn on the environment
 vagrant up
 
 # check the inventory generation playbook syntax
-playbookSyntaxCheck playbook-ec2-instances-inventory.yml
+checkPlaybookSyntax playbook-ec2-instances-inventory.yml
 
 # generate the inventory
 rm -f ec2_hosts
@@ -30,7 +30,7 @@ if [ ! -f ec2_hosts ]; then
 fi
 
 # check the parameters file generation playbook syntax
-playbookSyntaxCheck playbook-params-json.yml
+checkPlaybookSyntax playbook-params-json.yml
 
 # update the parameters file
 rm -f params.json
@@ -42,21 +42,16 @@ if [ ! -f params.json ]; then
 fi
 
 # check the solution playbook syntax
-playbookSyntaxCheck ../playbook-servers.yml ec2_hosts
+checkPlaybookSyntax ../playbook-servers.yml ec2_hosts
 
 # execute the solution
 ansible-playbook ../playbook-servers.yml -i ec2_hosts -e "params_file=aws/params.json" | tee -a ${tmpfile}
-assertPlaybookExecutionSuccess 4 2
+assertEquals 2 $(tail -4 ${tmpfile} | grep -c "failed=0")
 
 # validate the solution
 ansible servers -i ec2_hosts -m shell -a "ls /var/target" | tee ${tmpfile}
-assert1=$(awk '/server1/ {getline; print $0}' ${tmpfile})
-assert2=$(awk '/server2/ {getline; print $0}' ${tmpfile})
-if [[ ${assert1} != "apache-maven-3.5.0" || ${assert2} != "apache-ant-1.10.1" ]]; then
-	echo "Assertion error."
-	teardown
-	exit 1
-fi
+assertEquals "apache-maven-3.5.0" $(awk '/server1/ {getline; print $0}' ${tmpfile})
+assertEquals "apache-ant-1.10.1" $(awk '/server2/ {getline; print $0}' ${tmpfile})
 
 # turn off the environment and exit
 teardown

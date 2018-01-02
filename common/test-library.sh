@@ -1,6 +1,6 @@
 #!/bin/sh
 
-playbookSyntaxCheck()
+checkPlaybookSyntax()
 {
 	PLAYBOOK_FILE=$1
 	INVENTORY_FILE=$2
@@ -17,13 +17,12 @@ playbookSyntaxCheck()
 	echo "$PLAYBOOK_FILE syntax is OK"
 }
 
-assertPlaybookExecutionSuccess()
+assertEquals()
 {
-	LAST_NUM_LINES=$1
-	EXPECTED_SUCCESS_LINES=$2
-	ACTUAL_SUCCESS_LINES=$(tail -$LAST_NUM_LINES ${tmpfile} | grep -c "failed=0")
-	if [ ${ACTUAL_SUCCESS_LINES} -ne $EXPECTED_SUCCESS_LINES ]; then
-		echo "Error on playbook execution"
+	EXPECTED=$1
+	ACTUAL=$2
+	if [ "$ACTUAL" != "$EXPECTED" ]; then
+		echo "Assertion error: $EXPECTED expected, but $ACTUAL gotten"
 		teardown
 		exit 1
 	fi
