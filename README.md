@@ -26,11 +26,11 @@ The project is totally open for collaboration, like any other open source projec
 
 Every development requires an environment for testing. The Codeyourinfra project's solutions have each one a local environment where the tests can be done. The local environment is composed by virtual machines that simulates the scenario with the problem to be solved. The local VMs are managed by [Vagrant](https://www.vagrantup.com), which uses [VirtualBox](https://www.virtualbox.org/) as the [hypervisor](https://en.wikipedia.org/wiki/Hypervisor).
 
-The [release 1.5.0](https://github.com/esign-consulting/codeyourinfra/tree/1.5.0) of the project brought the [Ansible](https://www.ansible.com) development to the cloud. Besides local VMs, remote [AWS EC2](https://aws.amazon.com/ec2) instances became an option for testing the solution. Each solution got an **aws** folder from where the AWS environment can be managed. The same way as initializing local VMs, initializing EC2 instances is as simple as executing the command `$ vagrant up`.
+The [release 1.5.0](https://github.com/esign-consulting/codeyourinfra/releases/tag/1.5.0) of the project brought the [Ansible](https://www.ansible.com) development to the cloud. Besides local VMs, remote [AWS EC2](https://aws.amazon.com/ec2) instances became an option for testing the solution. Each solution got an **aws** folder from where the AWS environment can be managed. The same way as initializing local VMs, initializing EC2 instances is as simple as executing the command `$ vagrant up`.
 
 ### Environment variables
 
-Since the [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project has been providing environment variables for changing the default behaviour of the development environment initialization. They are as follows:
+Since the [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/releases/tag/1.4.0), the Codeyourinfra project has been providing environment variables for changing the default behaviour of the development environment initialization. They are as follows:
 
 Environment variable | Required | Default | Choices | Comments
 -------------------- | -------- | ------- | ------- | --------
