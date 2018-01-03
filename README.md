@@ -22,11 +22,17 @@ The project is totally open for collaboration, like any other open source projec
 * Commenting on the articles posted on the [blog](http://codeyourinfra.today/blog)
 * Telling the [problems](http://codeyourinfra.today/your-problem) you face as a sysadmin
 
-## Environment variables
+## The development environment
+
+Every development requires an environment for testing. The Codeyourinfra project's solutions have each one a local environment where the tests can be done. The local environment is composed by virtual machines that simulates the scenario with the problem to be solved. The local VMs are managed by [Vagrant](https://www.vagrantup.com), which uses [VirtualBox](https://www.virtualbox.org/) as the [hypervisor](https://en.wikipedia.org/wiki/Hypervisor).
+
+The [release 1.5.0](https://github.com/esign-consulting/codeyourinfra/tree/1.5.0) of the project brought the [Ansible](https://www.ansible.com) development to the cloud. Besides local VMs, remote [AWS EC2](https://aws.amazon.com/ec2) instances became an option for testing the solution. Each solution got an **aws** folder from where the AWS environment can be managed. The same way as initializing local VMs, initializing EC2 instances is as simple as executing the command `$ vagrant up`.
+
+### Environment variables
 
 Since the [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project has been providing environment variables for changing the default behaviour of the development environment initialization. They are as follows:
 
 Environment variable | Required | Default | Choices | Comments
 -------------------- | -------- | ------- | ------- | --------
 APPEND_TIMESTAMP | No | false | true or false | If 'true', prepend the current datetime in each line of the vagrant command output.
-PROVISIONING_OPTION | No | fried | baked or fried | If 'baked', a previously prepared Vagrant box is used, rather than the default one that requires to be provisioned from the scratch.
+PROVISIONING_OPTION | No | fried | baked or fried | If 'baked', a previously prepared [Vagrant box](https://www.vagrantup.com/docs/boxes.html) or [AWS AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) is used, rather than the default one that requires to be provisioned from the scratch.
