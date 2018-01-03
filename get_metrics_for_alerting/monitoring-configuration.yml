@@ -37,13 +37,10 @@
     body_format: json
   register: response
   failed_when: response.status != 200 and response.status != 412
-- name: Add localhost to Ansible inventory
-  blockinfile:
-    path: /etc/ansible/hosts
-    create: yes
-    block: |
-      [monitored_servers]
-      localhost ansible_connection=local
+- name: Copy the Ansible inventory
+  copy:
+    src: monitored_hosts
+    dest: /etc/ansible/hosts
 - name: Disable SSH key host checking
   ini_file:
     path: /etc/ansible/ansible.cfg
