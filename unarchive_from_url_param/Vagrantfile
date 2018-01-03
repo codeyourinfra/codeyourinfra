@@ -11,6 +11,7 @@ end
 
 Vagrant.configure("2") do |config|
   config.vm.box = "minimal/trusty64"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.define "repo" do |repo|
     if provisioning_option == 'baked'

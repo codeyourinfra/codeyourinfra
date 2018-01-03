@@ -1,2 +1,2 @@
 [jenkins]
-192.168.33.10
+192.168.33.10 ansible_user=vagrant ansible_ssh_pass=vagrant
