@@ -36,3 +36,15 @@ Environment variable | Required | Default | Choices | Comments
 -------------------- | -------- | ------- | ------- | --------
 APPEND_TIMESTAMP | No | false | true or false | If 'true', prepend the current datetime in each line of the vagrant command output.
 PROVISIONING_OPTION | No | fried | baked or fried | If 'baked', a previously prepared [Vagrant box](https://www.vagrantup.com/docs/boxes.html) or [AWS AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) is used, rather than the default one that requires to be provisioned from the scratch.
+
+### Testing the solution
+
+The [release 1.6.0](https://github.com/esign-consulting/codeyourinfra/releases/tag/1.6.0) of the project made easier validating the solutions, by automating the tests. The tests then can be done either manually, through the command line, or automatically, by running the shell script **test.sh**.
+
+The script file of the solution root folder, if executed, uses the local environment. Likewise, the one inside the **aws** subdirectory, if executed, uses the AWS environment. They follow basically the steps below:
+1. environment boot up
+2. Ansible playbooks syntax check
+3. auxiliary playbooks execution (if required)
+4. solution playbook execution
+5. solution validation
+6. environment teardown
