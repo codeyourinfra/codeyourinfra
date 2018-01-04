@@ -36,7 +36,7 @@ If you are behind a proxy, extra configuration is needed. Make sure you can acce
 
 ### Provisioning options
 
-Since the [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0), the Codeyourinfra project has been providing two options for provisioning: **baked** and **fried** (default). If the **repo server** is turned on with the **PROVISIONING_OPTION** environment variable set to **baked**, the Vagrant box that will be used is **codeyourinfra/repo**, instead of the default **minimal/trusty64**.
+Since the [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/releases/tag/1.4.0), the Codeyourinfra project has been providing two options for provisioning: **baked** and **fried** (default). If the **repo server** is turned on with the **PROVISIONING_OPTION** environment variable set to **baked**, the Vagrant box that will be used is **codeyourinfra/repo**, instead of the default **minimal/trusty64**.
 
 Apache HTTP Server has already been installed in the **codeyourinfra/repo** Vagrant box, so it's needless to provision it from the scratch, like the **minimal/trusty64** Vagrant box requires. Booting up the **repo server** with the **codeyourinfra/repo** Vagrant box is faster, as shown by the comparison table below:
 

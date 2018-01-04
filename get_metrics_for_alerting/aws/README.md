@@ -10,7 +10,7 @@ If you haven't already executed, run `$ ansible-playbook ../../cloud/aws/playboo
 
 Then, just run `$ vagrant up`. If you have already configured the [AWS CLI tool](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html), the default region defined in the **~/.aws/config** file will be used, otherwise set the **AWS_REGION** or the **EC2_REGION** environment variable with the region of your prior choice.
 
-The Vagrant commands will also take into consideration the **APPEND_TIMESTAMP** and the **PROVISIONING_OPTION** environment variables, introduced in the Codeyourinfra project's [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/tree/1.4.0).
+The Vagrant commands will also take into consideration the **APPEND_TIMESTAMP** and the **PROVISIONING_OPTION** environment variables, introduced in the Codeyourinfra project's [release 1.4.0](https://github.com/esign-consulting/codeyourinfra/releases/tag/1.4.0).
 
 #### 3. Inventory
 
