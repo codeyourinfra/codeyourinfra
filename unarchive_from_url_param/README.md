@@ -16,6 +16,8 @@ First of all, turn on the VMs, executing the command `$ vagrant up`. The VM from
 
 Once the test environment is up, execute the command `$ ansible-playbook playbook-servers.yml -i hosts`. The **-i** parameter points to the inventory file. In just one shot, the task is automatically performed server by server.
 
+Finally, in order to check if the compressed files were properly extracted in both servers, execute the command `$ ansible servers -m shell -a "ls /var/target -i hosts"`.
+
 If you prefer to test automatically, just run `$ ./test.sh`. Likewise, if you prefer to test against EC2 instances, rather than local VMs, just run `$ cd aws/ && ./test.sh`.
 
 ### Important
