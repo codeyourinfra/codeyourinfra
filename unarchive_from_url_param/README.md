@@ -12,9 +12,11 @@ Keep in a separated file all the information needed ([params.json](params.json))
 
 ## Test
 
-First of all, turn on the VMs, executing the command `$ vagrant up`. The VM from which the compressed files will be downloaded (**repo server**) is automatically provisioned ([playbook-repo.yml](playbook-repo.yml)). The others VMs (**server1** and **server2**) represent the set of target servers where the unarchive task will be performed.
+First of all, turn on the VMs, executing the command `$ vagrant up`. The VM from which the compressed files will be downloaded (**repo server**) is automatically provisioned ([playbook-repo.yml](playbook-repo.yml)), if the **PROVISIONING_OPTION** environment variable is not set to **baked** (see [Provisioning Options](#provisioning-options)). The others VMs (**server1** and **server2**) represent the set of target servers where the unarchive task will be performed.
 
-Once the test environment is up, execute the command `$ ansible-playbook playbook-servers.yml -u vagrant -k -i hosts`. The **-u** parameter identifies the SSH user, the **-k** parameter prompts for password information (vagrant, too), and the **-i** parameter points to the inventory file. In just one shot, the task is automatically performed server by server.
+Once the test environment is up, execute the command `$ ansible-playbook playbook-servers.yml -i hosts`. The **-i** parameter points to the inventory file. In just one shot, the task is automatically performed server by server.
+
+If you prefer to test automatically, just run `$ ./test.sh`. Likewise, if you prefer to test against EC2 instances, rather than local VMs, just run `$ cd aws/ && ./test.sh`.
 
 ### Important
 
