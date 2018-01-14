@@ -8,7 +8,7 @@ The developers are always asking you the applications' log files, for troublesho
 
 ## Solution
 
-Make the log files available through the web browser! The [playbook-jenkins-logs.yml](https://github.com/esign-consulting/codeyourinfra/blob/master/check_server_log_files/playbook-jenkins-logs.yml) is an example of Ansible playbook which makes that for you. When executed, the playbook installs and configures the [Apache HTTP Server](https://httpd.apache.org) in a way that the Jenkins log files become accessible through the browser. The playbook can be easily adapted to make the same for any application you wish.
+Make the log files available through the web browser! The [playbook-jenkins-logs.yml](playbook-jenkins-logs.yml) is an example of Ansible playbook which makes that for you. When executed, the playbook installs and configures the [Apache HTTP Server](https://httpd.apache.org) in a way that the Jenkins log files become accessible through the browser. The playbook can be easily adapted to make the same for any application you wish.
 
 ## Test
 
