@@ -5,13 +5,11 @@
 server1 ansible_host=192.168.33.20 ansible_ssh_private_key_file=.vagrant/machines/server1/virtualbox/private_key
 server2 ansible_host=192.168.33.30 ansible_ssh_private_key_file=.vagrant/machines/server2/virtualbox/private_key
 
-[servers:vars]
-ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
-
 [local_instances:children]
 repo
 servers
 
 [local_instances:vars]
 ansible_user=vagrant
+ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
 ansible_python_interpreter=/usr/bin/python3
