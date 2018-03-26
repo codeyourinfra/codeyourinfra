@@ -1,12 +1,19 @@
 ---
-- name: Install Ansible 2.4.1.0
+- name: Install Ansible 2.5.0
   pip:
     name: ansible
-    version: 2.4.1.0
+    version: 2.5.0
 - name: Create the Ansible directory if it doesn't exist
   file:
     path: /etc/ansible
     state: directory
-- name: Install sshpass
+- name: Install required Ansible packages
   apt:
-    name: sshpass
+    name: '{{item}}'
+  with_items:
+    - sshpass
+    - libssl-dev
+- name: Upgrade cryptography
+  pip:
+    name: cryptography
+    state: latest
