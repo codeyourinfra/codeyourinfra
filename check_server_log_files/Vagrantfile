@@ -11,12 +11,15 @@ end
 
 Vagrant.configure("2") do |config|
   config.vm.define "jenkins" do |jenkins|
-    jenkins.vm.box = ("codeyourinfra/jenkins" if provisioning_option == 'baked') || "minimal/trusty64"
+    jenkins.vm.box = ("codeyourinfra/jenkins" if provisioning_option == 'baked') || "ubuntu/xenial64"
     jenkins.vm.hostname = "jenkins.local"
     jenkins.vm.network "private_network", ip: "192.168.33.10"
     if provisioning_option == 'fried'
       jenkins.vm.provision "ansible" do |ansible|
         ansible.playbook = "playbook-jenkins.yml"
+        ansible.host_vars = {
+          "jenkins" => {"ansible_python_interpreter" => "/usr/bin/python3"}
+        }
       end
     end
   end
