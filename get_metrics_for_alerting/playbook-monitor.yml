@@ -8,17 +8,7 @@
       update_cache: yes
     with_items:
       - apt-transport-https
-      - python-setuptools
-    tags:
-      - installation
-  - name: Install PIP
-    easy_install:
-      name: pip
-    tags:
-      - installation
-  - name: Install ndg-httpsclient (required Python module)
-    pip:
-      name: ndg-httpsclient
+      - python3-pip
     tags:
       - installation
   - name: Install InfluxDB
@@ -31,7 +21,7 @@
     tags:
       - installation
       - grafana-installation
-  - name: Install Ansible 2.4.1.0
+  - name: Install Ansible 2.5.0
     include_tasks: ansible-installation.yml
     tags:
       - installation
