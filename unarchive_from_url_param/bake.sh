@@ -9,11 +9,12 @@ teardown()
 # turn on the repo server
 vagrant up repo
 
-# free up disk space
-ansible repo -i hosts -m shell -a "apt-get clean && dd if=/dev/zero of=/EMPTY bs=1M && rm -f /EMPTY && cat /dev/null > ~/.bash_history && history -c && exit" -b
+# show information about the repo server
+ansible repo -i hosts -m shell -a "lsb_release -a"
+ansible repo -i hosts -m shell -a "apache2 -v"
 
 # bake the repo server
-vagrant package repo -–output repo.box
+vagrant package repo --output repo.box
 
 # turn off the repo server and exit
 teardown
