@@ -8,6 +8,6 @@
     question: shared/accepted-oracle-license-v1-1
     value: 'true'
     vtype: select
-- name: Install Oracle JDK 1.8.0
+- name: Install latest Oracle JDK 1.8.0 update
   apt:
     name: oracle-java8-installer
