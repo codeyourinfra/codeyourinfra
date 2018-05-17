@@ -8,10 +8,10 @@
       name: apt-transport-https
       update_cache: yes
   - name: Install latest Oracle JDK 1.8.0 update (required for Jenkins installation)
-    include_tasks: oracle-java8-installation.yml
+    import_tasks: oracle-java8-installation.yml
     tags:
       - java8-installation
   - name: Install latest Jenkins
-    include_tasks: jenkins-installation.yml
+    import_tasks: jenkins-installation.yml
     tags:
       - jenkins-installation
