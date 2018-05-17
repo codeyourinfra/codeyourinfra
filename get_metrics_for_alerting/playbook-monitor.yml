@@ -6,27 +6,27 @@
     apt:
       name: '{{item}}'
       update_cache: yes
-    with_items:
+    loop:
       - apt-transport-https
       - python3-pip
     tags:
       - installation
-  - name: Install InfluxDB
-    include_tasks: influxdb-installation.yml
+  - name: Install latest InfluxDB
+    import_tasks: influxdb-installation.yml
     tags:
       - installation
       - influxdb-installation
-  - name: Install Grafana 4.6.2
-    include_tasks: grafana-installation.yml
+  - name: Install latest Grafana
+    import_tasks: grafana-installation.yml
     tags:
       - installation
       - grafana-installation
-  - name: Install Ansible 2.5.0
-    include_tasks: ansible-installation.yml
+  - name: Install latest Ansible
+    import_tasks: ansible-installation.yml
     tags:
       - installation
       - ansible-installation
   - name: Configure monitoring
-    include_tasks: monitoring-configuration.yml
+    import_tasks: monitoring-configuration.yml
     tags:
       - configuration
