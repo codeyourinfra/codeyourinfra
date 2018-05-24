@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "test#{i}" do |test|
       test.vm.provider "aws" do |aws, override|
         aws.region = aws_region
-        aws.ami = ubuntu_ami['ami_id']
+        aws.ami = ubuntu_ami['image_id']
         aws.instance_type = "t2.micro"
         aws.keypair_name = "codeyourinfra-aws-key"
         aws.security_groups = security_group['group_id']
