@@ -8,3 +8,4 @@ jenkins
 ansible_user=ubuntu
 ansible_ssh_private_key_file=../../cloud/aws/{{aws_region}}/codeyourinfra-aws-key.pem
 ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
+ansible_python_interpreter=/usr/bin/python3
