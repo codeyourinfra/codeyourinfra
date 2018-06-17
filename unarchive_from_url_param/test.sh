@@ -22,7 +22,7 @@ checkPlaybookSyntax playbook-servers.yml hosts
 
 # execute the solution
 ansible-playbook playbook-servers.yml -i hosts | tee ${tmpfile}
-assertEquals 2 $(tail -4 ${tmpfile} | grep -c "failed=0")
+assertEquals 3 $(tail -4 ${tmpfile} | grep -c "failed=0")
 
 # validate the solution
 ansible servers -i hosts -m shell -a "ls /var/target" | tee ${tmpfile}
