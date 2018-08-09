@@ -2,7 +2,7 @@
 tmpfile=$(mktemp)
 
 if [[ "x$AWS_REGION" == "x" ]]; then
-    AWS_REGION=sa-east-1
+	export AWS_REGION=$(test -f ~/.aws/config && grep region ~/.aws/config | sed 's/.*=\s*//' || sa-east-1)
 fi
 
 # setup the aws region, if needed

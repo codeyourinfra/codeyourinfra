@@ -1,7 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-aws_region = ENV['AWS_REGION'] || ENV['EC2_REGION'] || "sa-east-1"
+def get_region()
+  aws_config_file = File.expand_path('~/.aws/config')
+  if File.file?(aws_config_file)
+    region_line = File.foreach(aws_config_file).detect { |line| line.start_with?('region') }
+    region_line.split('=')[-1].strip if region_line
+  end
+end
+aws_region = ENV['AWS_REGION'] || ENV['EC2_REGION'] || get_region() || "sa-east-1"
 if !Dir.exists?(aws_region)
   puts 'The directory ' + aws_region + ' does not exist.'
   abort
