@@ -60,16 +60,14 @@
       mode: 0400
     when: ec2_key_result.key.private_key is defined
   - name: Find Ubuntu Server 14.04 LTS AMIs
-    ec2_ami_find:
-      name: 'ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*'
+    ec2_ami_facts:
       region: '{{aws_region}}'
-      owner: 099720109477
-      sort: name
-      sort_order: descending
-      sort_end: 1
-    register: ec2_ami_find_result
+      owners: 099720109477
+      filters:
+        name: 'ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*'
+    register: ec2_ami_facts_result
   - name: Store the Ubuntu AMI's data
     copy:
-      content: '{{ec2_ami_find_result.results[0]|to_nice_json}}'
+      content: '{{(ec2_ami_facts_result.images|sort(attribute="name",reverse=True))[0]|to_nice_json}}'
       dest: '{{aws_region}}/ubuntu-ami.json'
-    when: ec2_ami_find_result.results[0] is defined
+    when: ec2_ami_facts_result.images|length > 0

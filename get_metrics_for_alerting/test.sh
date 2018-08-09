@@ -4,7 +4,7 @@ tmpfile=$(mktemp)
 teardown()
 {
 	vagrant destroy -f
-	rm -rf .vagrant/ *.retry "$tmpfile"
+	rm -rf .vagrant/ *.retry "$tmpfile" ubuntu-xenial-16.04-cloudimg-console.log
 }
 
 . ../common/test-library.sh
@@ -24,9 +24,9 @@ vagrant up
 checkPlaybookSyntax playbook-add-server.yml hosts
 
 # execute the solution
-ansible-playbook playbook-add-server.yml -i hosts -e "host=192.168.33.20 user=vagrant password=vagrant" | tee ${tmpfile}
+ansible-playbook playbook-add-server.yml -i hosts -e "host=192.168.33.20 user=vagrant private_key=.vagrant/machines/server1/virtualbox/private_key" | tee ${tmpfile}
 assertEquals 1 $(tail -3 ${tmpfile} | grep -c "failed=0")
-ansible-playbook playbook-add-server.yml -i hosts -e "host=192.168.33.30 user=vagrant password=vagrant" | tee ${tmpfile}
+ansible-playbook playbook-add-server.yml -i hosts -e "host=192.168.33.30 user=vagrant private_key=.vagrant/machines/server2/virtualbox/private_key" | tee ${tmpfile}
 assertEquals 1 $(tail -3 ${tmpfile} | grep -c "failed=0")
 
 # validate the solution

@@ -1,9 +1,10 @@
 ---
+- name: Install influxdb Python package
+  pip:
+    name: influxdb
 - name: Create the InfluxDB database
-  uri:
-    url: http://localhost:8086/query
-    method: POST
-    body: "q=CREATE DATABASE monitor"
+  influxdb_database:
+    database_name: monitor
 - name: Create the Grafana datasource
   uri:
     url: http://localhost:3000/api/datasources
@@ -14,7 +15,16 @@
     body: "{{lookup('file','monitor-datasource.json')}}"
     body_format: json
   register: response
-  failed_when: response.status != 200 and response.status != 409
+  changed_when: response.status == 200
+  failed_when: response.status != 200 and response.json.message != "Data source with same name already exists"
+- name: Get the alert notifications
+  uri:
+    url: http://localhost:3000/api/alert-notifications
+    method: GET
+    user: admin
+    password: admin
+    force_basic_auth: yes
+  register: alert_notifications
 - name: Create the Slack notification channel
   uri:
     url: http://localhost:3000/api/alert-notifications
@@ -24,8 +34,9 @@
     force_basic_auth: yes
     body: "{{lookup('file','slack-notification-channel.json')}}"
     body_format: json
+  when: alert_notifications.json|json_query("[?name=='Slack notification channel']")|length == 0
   register: response
-  failed_when: response.status != 200 and response.status != 500
+  changed_when: response.status == 200
 - name: Create the Grafana dashboard
   uri:
     url: http://localhost:3000/api/dashboards/db
@@ -36,7 +47,8 @@
     body: "{{lookup('file','used_mem_pct-dashboard.json')}}"
     body_format: json
   register: response
-  failed_when: response.status != 200 and response.status != 412
+  changed_when: response.status == 200
+  failed_when: response.status != 200 and response.json.message != "A dashboard with the same name in the folder already exists"
 - name: Copy the Ansible inventory
   copy:
     src: monitored_hosts

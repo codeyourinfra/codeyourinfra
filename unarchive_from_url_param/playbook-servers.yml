@@ -1,4 +1,11 @@
 ---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Install jmespath
+    pip:
+      name: jmespath
 - hosts: servers
   become: yes
   vars:
@@ -18,7 +25,7 @@
     apt:
       name: unzip
       update_cache: yes
-    when: url_param | match(".*\.zip$")
+    when: url_param is match(".*\.zip$")
   - name: Unarchive from url
     unarchive:
       src: "{{url_param}}"

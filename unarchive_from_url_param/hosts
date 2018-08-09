@@ -1,5 +1,5 @@
 [repo]
-192.168.33.10
+192.168.33.10 ansible_ssh_private_key_file=.vagrant/machines/repo/virtualbox/private_key
 
 [servers]
 server1 ansible_host=192.168.33.20 ansible_ssh_private_key_file=.vagrant/machines/server1/virtualbox/private_key
@@ -11,3 +11,5 @@ servers
 
 [local_instances:vars]
 ansible_user=vagrant
+ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
+ansible_python_interpreter=/usr/bin/python3

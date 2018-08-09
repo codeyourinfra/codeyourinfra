@@ -6,7 +6,7 @@
   - name: Add the server into the monitored_servers group
     lineinfile:
       path: /etc/ansible/hosts
-      insertafter: "[monitored_servers]"
+      insertafter: "^\\[monitored_servers\\]$"
       line: "{{host}} ansible_user={{user}} ansible_ssh_pass={{password}}"
     when: host is defined and user is defined and password is defined
   - name: Copy the SSH user private key
@@ -18,6 +18,6 @@
   - name: Add the server into the monitored_servers group
     lineinfile:
       path: /etc/ansible/hosts
-      insertafter: "[monitored_servers]"
+      insertafter: "^\\[monitored_servers\\]$"
       line: "{{host}} ansible_user={{user}} ansible_ssh_private_key_file=/etc/ansible/{{host}}.private_key"
     when: host is defined and user is defined and private_key is defined
