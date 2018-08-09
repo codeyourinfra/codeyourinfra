@@ -2,6 +2,10 @@
 # vi: set ft=ruby :
 
 aws_region = ENV['AWS_REGION'] || ENV['EC2_REGION'] || "sa-east-1"
+if !Dir.exists?(aws_region)
+  puts 'The directory ' + aws_region + ' does not exist.'
+  abort
+end
 security_group  = JSON.parse(File.read(File.join(aws_region, "security-group.json")))
 subnet = JSON.parse(File.read(File.join(aws_region, "subnet.json")))
 ubuntu_ami = JSON.parse(File.read(File.join(aws_region, "ubuntu-ami.json")))

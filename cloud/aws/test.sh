@@ -1,27 +1,39 @@
 #!/bin/bash
 tmpfile=$(mktemp)
 
+if [[ "x$AWS_REGION" == "x" ]]; then
+    AWS_REGION=sa-east-1
+fi
+
+# setup the aws region, if needed
+if [ ! -d "$AWS_REGION" ]; then
+	ansible-playbook playbook-aws-region-configuration.yml -e aws_region=$AWS_REGION
+fi
+
 teardown()
 {
 	vagrant destroy -f
-	rm -rf .vagrant/ *.retry "$tmpfile" sa-east-1/ec2_hosts
+	rm -rf .vagrant/ *.retry "$tmpfile" $AWS_REGION/ec2_hosts
 }
 
 . ../../common/test-library.sh
 
-# turn on the environment
+# install vagrant-aws plugin, if needed, and turn on the environment
+if [ $(vagrant plugin list | grep -c vagrant-aws) -ne 1 ]; then
+	vagrant plugin install vagrant-aws
+fi
 vagrant up
 
 # check the inventory generation playbook syntax
 checkPlaybookSyntax playbook-ec2-instances-inventory.yml
 
 # generate the inventory
-rm -f sa-east-1/ec2_hosts
-ansible-playbook playbook-ec2-instances-inventory.yml -e "aws_region=sa-east-1"
-assertFileExists sa-east-1/ec2_hosts
+rm -f $AWS_REGION/ec2_hosts
+ansible-playbook playbook-ec2-instances-inventory.yml -e aws_region=$AWS_REGION
+assertFileExists $AWS_REGION/ec2_hosts
 
 # check connectivity
-ansible ec2_instances -i sa-east-1/ec2_hosts -m ping | tee ${tmpfile}
+ansible ec2_instances -i $AWS_REGION/ec2_hosts -m ping | tee ${tmpfile}
 assertEquals 3 $(grep -c '"ping": "pong"' ${tmpfile})
 
 # turn off the environment and exit
