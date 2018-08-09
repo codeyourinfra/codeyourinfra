@@ -62,7 +62,7 @@
       dest: '{{aws_region}}/codeyourinfra-aws-key.pem'
       mode: 0400
     when: ec2_key_result.key.private_key is defined
-  - name: Find Ubuntu Server 14.04 LTS AMIs
+  - name: Find Ubuntu Server 16.04 LTS AMIs
     ec2_ami_facts:
       region: '{{aws_region}}'
       owners: 099720109477
