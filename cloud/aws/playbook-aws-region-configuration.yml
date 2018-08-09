@@ -1,7 +1,6 @@
 ---
 - hosts: localhost
-  connection: local
-  gather_facts: false
+  gather_facts: no
   vars_prompt:
     - name: "aws_region"
       prompt: "AWS Region"

@@ -1,13 +1,15 @@
 ---
 - hosts: localhost
-  connection: local
-  gather_facts: false
+  gather_facts: no
   vars_prompt:
     - name: "aws_region"
       prompt: "AWS Region"
       default: "sa-east-1"
       private: no
   tasks:
+  - name: Install boto3
+    pip:
+      name: boto3
   - name: Gather facts about EC2 instances managed by Vagrant
     ec2_instance_facts:
       region: '{{aws_region}}'
