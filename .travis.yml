@@ -4,7 +4,7 @@ python:
   - "3.6"
 install:
   - pip install ansible
-  - ls -la ~/virtualenv/python3.6/bin/
+  - sudo ln -s ~/virtualenv/python3.6/bin/python3.6 /usr/bin/python3.6
   - wget -c https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb
   - sudo dpkg -i vagrant_2.1.2_x86_64.deb
   - vagrant plugin install vagrant-aws
