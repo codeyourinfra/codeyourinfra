@@ -1,8 +1,11 @@
 sudo: required
-language: minimal
+language: python
+python:
+  - "3.6"
 install:
-- wget -c https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb
-- sudo dpkg -i vagrant_2.1.2_x86_64.deb
-- vagrant plugin install vagrant-aws
+  - pip install ansible
+  - wget -c https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb
+  - sudo dpkg -i vagrant_2.1.2_x86_64.deb
+  - vagrant plugin install vagrant-aws
 script:
-- cd cloud/aws && ./test.sh
+  - cd cloud/aws && ./test.sh
