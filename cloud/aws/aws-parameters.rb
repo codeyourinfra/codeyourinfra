@@ -67,3 +67,7 @@ end
 def get_ami()
   get_ami_from_env() || get_ami_from_file() || get_defaults('image_id')
 end
+
+def get_parameters()
+  return get_region(), get_security_group(), get_subnet(), get_ami()
+end

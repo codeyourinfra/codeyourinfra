@@ -22,7 +22,7 @@ teardown()
 if [ $(vagrant plugin list | grep -c vagrant-aws) -ne 1 ]; then
 	vagrant plugin install vagrant-aws
 fi
-vagrant up
+AWS_DEFAULT_REGION=$AWS_REGION vagrant up
 
 # check the inventory generation playbook syntax
 checkPlaybookSyntax playbook-ec2-instances-inventory.yml
