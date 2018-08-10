@@ -41,7 +41,7 @@ def get_security_group_from_file()
 end
 
 def get_security_group()
-  get_security_group_from_env() || get_security_group_from_file() || get_defaults('group_id'])
+  get_security_group_from_env() || get_security_group_from_file() || get_defaults('group_id')
 end
 
 def get_subnet_from_env()
