@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 load 'aws-parameters.rb'
-region = get_region()
+region = 'eu-west-2'
 security_group = get_security_group()
 subnet = get_subnet()
 ami = get_ami()
@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "test#{i}" do |test|
       test.vm.provider "aws" do |aws, override|
-        aws.region = ENV['AWS_REGION']
+        aws.region = region
         aws.ami = ami
         aws.instance_type = "t2.micro"
         aws.keypair_name = "codeyourinfra-aws-key"
