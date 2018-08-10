@@ -11,9 +11,12 @@
     file:
       path: '{{aws_region}}'
       state: directory
-  - name: Install boto3
+  - name: Install required Python packages
     pip:
-      name: boto3
+      name: "{{item}}"
+    loop:
+      - boto3
+      - jmespath
   - name: Get the VPCs
     ec2_vpc_net_facts:
       region: '{{aws_region}}'
