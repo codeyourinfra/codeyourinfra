@@ -3,13 +3,9 @@
 
 load 'aws-parameters.rb'
 aws_region = get_region()
-puts 'Region: ' + aws_region
 security_group = get_security_group()
-puts 'Security group: ' + security_group
 subnet = get_subnet()
-puts 'Subnet: ' + subnet
 ami = get_ami()
-puts 'AMI: ' + ami
 
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
@@ -19,6 +15,7 @@ Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "test#{i}" do |test|
       test.vm.provider "aws" do |aws, override|
+        puts 'Region: ' + aws_region
         aws.region = aws_region
         aws.ami = ami
         aws.instance_type = "t2.micro"
