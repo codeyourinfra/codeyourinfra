@@ -17,7 +17,7 @@ def get_from_file(name, id)
 end
 
 def get_region_from_env()
-  get_from_env('AWS_REGION', 'EC2_REGION')
+  get_from_env('AWS_DEFAULT_REGION', 'EC2_DEFAULT_REGION')
 end
 
 def get_region_from_file()
