@@ -19,10 +19,11 @@ teardown()
 . ../../common/test-library.sh
 
 # install vagrant-aws plugin, if needed, and turn on the environment
+export AWS_DEFAULT_REGION=$AWS_REGION
 if [ $(vagrant plugin list | grep -c vagrant-aws) -ne 1 ]; then
 	vagrant plugin install vagrant-aws
 fi
-AWS_DEFAULT_REGION=$AWS_REGION vagrant up
+vagrant up
 
 # check the inventory generation playbook syntax
 checkPlaybookSyntax playbook-ec2-instances-inventory.yml
