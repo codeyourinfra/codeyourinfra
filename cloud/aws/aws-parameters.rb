@@ -1,7 +1,9 @@
-defaults = { 'region' => 'sa-east-1',
-  'group_id' => 'sg-03a29f2c2e99c9305',
-  'subnet_id' => 'subnet-655c3902',
-  'image_id' => 'ami-01316f8dfe32c01e2'}
+def get_defaults(key)
+  { 'region' => 'sa-east-1',
+    'group_id' => 'sg-03a29f2c2e99c9305',
+    'subnet_id' => 'subnet-655c3902',
+    'image_id' => 'ami-01316f8dfe32c01e2' }[key]
+end
 
 def get_from_env(env1, env2)
   ENV[env1] || ENV[env2]
@@ -27,7 +29,7 @@ def get_region_from_file()
 end
 
 def get_region()
-  get_region_from_env() || get_region_from_file() || defaults['region']
+  get_region_from_env() || get_region_from_file() || get_defaults('region')
 end
 
 def get_security_group_from_env()
@@ -39,7 +41,7 @@ def get_security_group_from_file()
 end
 
 def get_security_group()
-  get_security_group_from_env() || get_security_group_from_file() || defaults['group_id']
+  get_security_group_from_env() || get_security_group_from_file() || get_defaults('group_id'])
 end
 
 def get_subnet_from_env()
@@ -51,7 +53,7 @@ def get_subnet_from_file()
 end
 
 def get_subnet()
-  get_subnet_from_env() || get_subnet_from_file() || defaults['subnet_id']
+  get_subnet_from_env() || get_subnet_from_file() || get_defaults('subnet_id')
 end
 
 def get_ami_from_env()
@@ -63,5 +65,5 @@ def get_ami_from_file()
 end
 
 def get_ami()
-  get_ami_from_env() || get_ami_from_file() || defaults['image_id']
+  get_ami_from_env() || get_ami_from_file() || get_defaults('image_id')
 end
