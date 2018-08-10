@@ -3,4 +3,4 @@ language: minimal
 install:
 - sudo apt-get install -y vagrant
 script:
-- vagrant -h
+- vagrant plugin install vagrant-aws
