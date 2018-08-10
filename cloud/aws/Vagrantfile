@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 load 'aws-parameters.rb'
-aws_region = get_region()
+region = get_region()
 security_group = get_security_group()
 subnet = get_subnet()
 ami = get_ami()
@@ -15,8 +15,7 @@ Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "test#{i}" do |test|
       test.vm.provider "aws" do |aws, override|
-        puts 'Region: ' + aws_region
-        aws.region = aws_region
+        aws.region = ENV['AWS_REGION']
         aws.ami = ami
         aws.instance_type = "t2.micro"
         aws.keypair_name = "codeyourinfra-aws-key"
@@ -24,7 +23,7 @@ Vagrant.configure("2") do |config|
         aws.subnet_id = subnet
         aws.tags = {"Name" => "test#{i}"}
         override.ssh.username = "ubuntu"
-        override.ssh.private_key_path = File.join(aws_region, "codeyourinfra-aws-key.pem")
+        override.ssh.private_key_path = File.join(region, "codeyourinfra-aws-key.pem")
         override.nfs.functional = false
       end
     end
