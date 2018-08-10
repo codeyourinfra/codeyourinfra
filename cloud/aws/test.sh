@@ -1,8 +1,10 @@
 #!/bin/bash
 tmpfile=$(mktemp)
 
+export ANSIBLE_FORCE_COLOR=true
+
 if [[ "x$AWS_DEFAULT_REGION" == "x" ]]; then
-	export AWS_DEFAULT_REGION=$(test -f ~/.aws/config && grep region ~/.aws/config | sed 's/.*=\s*//' || sa-east-1)
+	export AWS_DEFAULT_REGION=$(test -f ~/.aws/config && grep region ~/.aws/config | sed 's/.*=\s*//' || echo sa-east-1)
 fi
 
 # setup the aws region, if needed
