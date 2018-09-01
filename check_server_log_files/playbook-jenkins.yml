@@ -2,16 +2,5 @@
 - hosts: jenkins
   become: yes
   gather_facts: no
-  tasks:
-  - name: Install apt-transport-https (required for the apt_repository task)
-    apt:
-      name: apt-transport-https
-      update_cache: yes
-  - name: Install latest Oracle JDK 1.8.0 update (required for Jenkins installation)
-    import_tasks: oracle-java8-installation.yml
-    tags:
-      - java8-installation
-  - name: Install latest Jenkins
-    import_tasks: jenkins-installation.yml
-    tags:
-      - jenkins-installation
+  roles:
+  - codeyourinfra.jenkins

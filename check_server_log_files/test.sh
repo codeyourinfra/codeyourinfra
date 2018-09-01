@@ -4,15 +4,10 @@ tmpfile=$(mktemp)
 teardown()
 {
 	vagrant destroy -f
-	rm -rf .vagrant/ *.retry "$tmpfile" jenkins.log ubuntu-xenial-16.04-cloudimg-console.log
+	rm -rf .vagrant/ *.retry "$tmpfile" jenkins.log ubuntu-xenial-16.04-cloudimg-console.log roles/
 }
 
 . ../common/test-library.sh
-
-# check the jenkins server provisioning playbook syntax
-if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
-	checkPlaybookSyntax playbook-jenkins.yml hosts
-fi
 
 # turn on the environment
 vagrant up
