@@ -68,6 +68,13 @@ def get_ami()
   get_ami_from_env() || get_ami_from_file() || get_defaults('image_id')
 end
 
+def get_private_key()
+  region = get_region()
+  default_file = File.join(region, 'codeyourinfra-aws-key.pem')
+  files = Dir.glob(File.join(region, 'codeyourinfra-aws-key-*.pem'))
+  files[0] if !files.empty? else default_file
+end
+
 def get_parameters()
-  return get_region(), get_security_group(), get_subnet(), get_ami()
+  return get_region(), get_security_group(), get_subnet(), get_ami(), get_private_key()
 end

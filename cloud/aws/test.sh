@@ -15,7 +15,7 @@ fi
 teardown()
 {
 	vagrant destroy -f
-	rm -rf .vagrant/ *.retry "$tmpfile" $AWS_DEFAULT_REGION/ec2_hosts
+	rm -rf .vagrant/ *.retry "$tmpfile" $AWS_DEFAULT_REGION/ec2_hosts $AWS_DEFAULT_REGION/codeyourinfra-aws-key-*.pem
 }
 
 . ../../common/test-library.sh
