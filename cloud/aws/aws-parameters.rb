@@ -2,7 +2,8 @@ def get_defaults(key)
   { 'region' => 'sa-east-1',
     'group_id' => 'sg-03a29f2c2e99c9305',
     'subnet_id' => 'subnet-655c3902',
-    'image_id' => 'ami-01316f8dfe32c01e2' }[key]
+    'image_id' => 'ami-01316f8dfe32c01e2',
+    'keypair_name' => 'codeyourinfra-aws-key' }[key]
 end
 
 def get_from_env(env1, env2)
@@ -68,13 +69,15 @@ def get_ami()
   get_ami_from_env() || get_ami_from_file() || get_defaults('image_id')
 end
 
-def get_private_key()
-  region = get_region()
-  default_file = File.join(region, 'codeyourinfra-aws-key.pem')
-  files = Dir.glob(File.join(region, 'codeyourinfra-aws-key-*.pem'))
-  files[0] if !files.empty? else default_file
+def get_keypair()
+  files = Dir.glob(File.join(get_region(), 'codeyourinfra\-aws\-key\-*.pem'))
+  if !files.empty?
+    files[0][/(codeyourinfra-aws-key-.*[^.pem])/, 1]
+  else
+    get_defaults('keypair_name')
+  end
 end
 
 def get_parameters()
-  return get_region(), get_security_group(), get_subnet(), get_ami(), get_private_key()
+  return get_region(), get_security_group(), get_subnet(), get_ami(), get_keypair()
 end

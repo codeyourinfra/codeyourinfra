@@ -12,17 +12,25 @@
       name: boto3
   - name: Gather facts about EC2 instances managed by Vagrant
     ec2_instance_facts:
-      region: '{{aws_region}}'
+      region: '{{ aws_region }}'
       filters:
         instance.group-name: vagrant
     register: ec2_instance_facts_result
+  - name: Find out the private key file
+    find:
+      paths: '{{ aws_region }}'
+      patterns: 'codeyourinfra-aws-key-*.pem'
+    register: find_result
+  - name: Set the private_key_file variable to use in template
+    set_fact:
+      private_key_file: '{{ find_result.files[0].path }}'
   - name: Save ec2 instances inventory file (part 1)
     template:
       src: ec2_hosts_template
-      dest: '{{aws_region}}/ec2_hosts'
+      dest: '{{ aws_region }}/ec2_hosts'
   - name: Save ec2 instances inventory file (part 2)
     lineinfile:
-      path: '{{aws_region}}/ec2_hosts'
+      path: '{{ aws_region }}/ec2_hosts'
       insertafter: '^\[ec2_instances\]$'
-      line: '{{item}}'
-    loop: '{{ec2_instance_facts_result|json_query("instances[*].public_ip_address")}}'
+      line: '{{ item }}'
+    loop: '{{ ec2_instance_facts_result|json_query("instances[*].public_ip_address") }}'

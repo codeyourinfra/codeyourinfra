@@ -7,10 +7,8 @@ if [[ "x$AWS_DEFAULT_REGION" == "x" ]]; then
 	export AWS_DEFAULT_REGION=$(test -f ~/.aws/config && grep region ~/.aws/config | sed 's/.*=\s*//' || echo sa-east-1)
 fi
 
-# setup the aws region, if needed
-if [ ! -d "$AWS_DEFAULT_REGION" ]; then
-	ansible-playbook playbook-aws-region-configuration.yml -e aws_region=$AWS_DEFAULT_REGION
-fi
+# setup the aws region
+ansible-playbook playbook-aws-region-configuration.yml -e aws_region=$AWS_DEFAULT_REGION
 
 teardown()
 {

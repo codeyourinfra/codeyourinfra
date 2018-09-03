@@ -50,7 +50,7 @@
     copy:
       content: '{{ (ec2_vpc_subnet_facts_results.subnets|sort(attribute="availability_zone"))[0]|to_nice_json }}'
       dest: '{{ aws_region}}/subnet.json'
-  - name: Set some variables
+  - name: Generate key pairs name suffix
     set_fact:
       suffix: "{{ 'codeyourinfra-aws-key' | hash('md5') | truncate(16, True, '') + (65535 | random | string) }}"
   - name: Create the key pairs
