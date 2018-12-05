@@ -10,9 +10,7 @@ teardown()
 . ../common/test-library.sh
 
 # check the monitoring server provisioning playbook syntax
-if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
-	checkPlaybookSyntax playbook-monitor.yml hosts
-fi
+checkPlaybookSyntax playbook-monitor.yml hosts
 
 # check the playbook-get-metrics.yml syntax
 checkPlaybookSyntax playbook-get-metrics.yml monitored_hosts
