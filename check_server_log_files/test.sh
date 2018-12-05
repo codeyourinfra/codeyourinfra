@@ -4,7 +4,7 @@ tmpfile=$(mktemp)
 teardown()
 {
 	vagrant destroy -f
-	rm -rf .vagrant/ *.retry "$tmpfile" jenkins.log ubuntu-xenial-16.04-cloudimg-console.log roles/
+	rm -rf .vagrant/ *.retry "$tmpfile" jenkins.log ubuntu-*-cloudimg-console.log roles/
 }
 
 . ../common/test-library.sh
