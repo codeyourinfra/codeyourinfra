@@ -49,6 +49,10 @@
   register: response
   changed_when: response.status == 200
   failed_when: response.status != 200 and response.json.message != "A dashboard with the same name in the folder already exists"
+- name: Create the Ansible directory if it doesn't exist
+  file:
+    path: /etc/ansible
+    state: directory
 - name: Copy the Ansible inventory
   copy:
     src: monitored_hosts
