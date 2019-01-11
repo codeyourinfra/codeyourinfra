@@ -13,10 +13,10 @@ teardown()
 vagrant up
 
 # check the solution playbook syntax
-checkPlaybookSyntax playbook-jenkins-logs.yml hosts
+checkPlaybookSyntax playbook.yml hosts
 
 # execute the solution
-ansible-playbook playbook-jenkins-logs.yml -i hosts | tee ${tmpfile}
+ansible-playbook playbook.yml -i hosts | tee ${tmpfile}
 assertEquals 1 $(tail -10 ${tmpfile} | grep -c "failed=0")
 
 # validate the solution
