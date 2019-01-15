@@ -1,0 +1,6 @@
+---
+- name: Converge
+  become: yes
+  hosts: all
+  roles:
+    - role: check_server_log_files

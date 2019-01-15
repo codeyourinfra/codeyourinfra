@@ -1,0 +1,5 @@
+---
+ignore: |
+  **/lib/
+rules:
+  line-length: disable
