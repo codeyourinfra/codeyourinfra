@@ -2,7 +2,7 @@
 - name: Install Apache 2
   apt:
     name: apache2
-    update_cache: yes
+    update_cache: true
 - name: Config Apache logs
   template:
     src: apache-logs.conf

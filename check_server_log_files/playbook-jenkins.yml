@@ -1,6 +1,6 @@
 ---
 - hosts: jenkins
-  become: yes
-  gather_facts: no
+  become: true
+  gather_facts: false
   roles:
   - codeyourinfra.jenkins
