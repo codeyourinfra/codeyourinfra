@@ -1,3 +1,4 @@
 ansible
 molecule
 python-vagrant
+boto
