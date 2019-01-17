@@ -8,17 +8,17 @@ lint:
 platforms:
   - name: jenkins
     region: eu-west-2
-    image: ami-04148806df7bacbeb
+    image: ami-0ef56f2737e9e6767
     instance_type: t2.micro
     vpc_subnet_id: subnet-1cb17175
 provisioner:
   name: ansible
-  log: true
   lint:
     name: ansible-lint
 scenario:
   name: aws
 verifier:
   name: testinfra
+  directory: ../tests
   lint:
     name: flake8

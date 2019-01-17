@@ -1,4 +1,5 @@
 .vagrant/
 *.retry
-ubuntu-xenial-16.04-cloudimg-console.log
+ubuntu-*-cloudimg-console.log
 *.box
+env
