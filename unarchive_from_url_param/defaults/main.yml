@@ -1,0 +1,8 @@
+---
+params:
+  server1:
+    url: http://192.168.33.10/server1.tar.gz
+    target: /var/target
+  server2:
+    url: http://192.168.33.10/server2.zip
+    target: /var/target

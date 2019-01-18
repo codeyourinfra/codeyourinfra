@@ -9,20 +9,15 @@ teardown()
 
 . ../common/test-library.sh
 
-# check the repo server provisioning playbook syntax
-if [[ ! -n $PROVISIONING_OPTION || "$PROVISIONING_OPTION" = "fried" ]]; then
-	checkPlaybookSyntax playbook-repo.yml hosts
-fi
-
 # turn on the environment
 vagrant up
 
 # check the solution playbook syntax
-checkPlaybookSyntax playbook-servers.yml hosts
+checkPlaybookSyntax playbook.yml hosts
 
 # execute the solution
-ansible-playbook playbook-servers.yml -i hosts | tee ${tmpfile}
-assertEquals 3 $(tail -14 ${tmpfile} | grep -c "failed=0")
+ansible-playbook playbook.yml -i hosts | tee ${tmpfile}
+assertEquals 2 $(tail -10 ${tmpfile} | grep -c "failed=0")
 
 # validate the solution
 ansible servers -i hosts -m shell -a "ls /var/target" | tee ${tmpfile}
