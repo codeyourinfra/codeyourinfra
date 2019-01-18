@@ -1,12 +1,12 @@
 ---
 - hosts: repo
-  become: yes
-  gather_facts: no
+  become: true
+  gather_facts: false
   tasks:
   - name: Install Apache 2
     apt:
       name: apache2
-      update_cache: yes
+      update_cache: true
   - name: Download files
     get_url:
       url: "{{item.url}}"
