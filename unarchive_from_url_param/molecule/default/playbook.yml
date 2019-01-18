@@ -1,0 +1,6 @@
+---
+- name: Converge
+  become: true
+  hosts: servers
+  roles:
+    - role: unarchive_from_url_param
