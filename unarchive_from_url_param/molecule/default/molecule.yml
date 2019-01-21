@@ -5,6 +5,8 @@ driver:
   name: vagrant
   provider:
     name: virtualbox
+  options:
+    provision: false
 lint:
   name: yamllint
 platforms:
@@ -29,6 +31,7 @@ platforms:
       - servers
 provisioner:
   name: ansible
+  log: true
   lint:
     name: ansible-lint
 scenario:
