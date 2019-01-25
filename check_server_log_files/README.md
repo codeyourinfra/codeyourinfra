@@ -12,7 +12,7 @@ Make the log files available through the web browser! The [playbook.yml](playboo
 
 ## Test
 
-First of all, run the command `vagrant up`, in order to turn on the **jenkins server**. After that, execute the command `ansible-playbook playbook.yml -i hosts`. Finally, open your web browser and access the Jenkins log files through the **URL** http://192.168.33.10/logs/jenkins. Alternativelly, download the Jenkins log file through the command `wget http://192.168.33.10/logs/jenkins/jenkins.log`.
+First of all, run the command `vagrant up`, in order to turn on the **jenkins server**. After that, execute the command `ansible-playbook playbook.yml`. Finally, open your web browser and access the Jenkins log files through the **URL** http://192.168.33.10/logs/jenkins. Alternativelly, download the Jenkins log file through the command `wget http://192.168.33.10/logs/jenkins/jenkins.log`.
 
 ### Automated tests
 
