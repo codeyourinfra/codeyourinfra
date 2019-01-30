@@ -3,18 +3,6 @@
   apt:
     name: apache2
     update_cache: true
-- name: Config Apache logs
-  template:
-    src: apache-logs.conf
-    dest: /etc/apache2/conf-available/{{ conf }}
-    owner: root
-    group: root
-    mode: 0644
-- name: Enable new config
-  file:
-    src: ../conf-available/{{conf}}
-    dest: /etc/apache2/conf-enabled/{{ conf }}
-    owner: root
-    group: root
-    state: link
-  notify: Restart Apache 2
+- name: Config Apache 2
+  include_tasks: apache-conf.yml
+  loop: "{{ apache_confs }}"
