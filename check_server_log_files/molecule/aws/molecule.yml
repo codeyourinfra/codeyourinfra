@@ -8,7 +8,8 @@ lint:
 platforms:
   - name: jenkins
     region: eu-west-2
-    image: ami-0ef56f2737e9e6767
+    image_owner: 334305766942
+    image_name: codeyourinfra/jenkins
     instance_type: t2.micro
     vpc_subnet_id: subnet-1cb17175
 provisioner:
