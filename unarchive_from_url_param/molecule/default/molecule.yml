@@ -12,19 +12,19 @@ lint:
 platforms:
   - name: repo
     box: codeyourinfra/repo
-    instance_interfaces:
+    interfaces:
       - network_name: private_network
         ip: 192.168.33.10
   - name: server1
     box: ubuntu/bionic64
-    instance_interfaces:
+    interfaces:
       - network_name: private_network
         ip: 192.168.33.20
     groups:
       - servers
   - name: server2
     box: ubuntu/bionic64
-    instance_interfaces:
+    interfaces:
       - network_name: private_network
         ip: 192.168.33.30
     groups:
