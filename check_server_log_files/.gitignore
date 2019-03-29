@@ -1,6 +1,0 @@
-.vagrant/
-*.retry
-ubuntu-*-cloudimg-console.log
-*.box
-env
-__pycache__

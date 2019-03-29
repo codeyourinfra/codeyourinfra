@@ -1,4 +1,8 @@
 .vagrant/
+.vscode/
+*.box
 *.retry
 ubuntu-*-cloudimg-console.log
-*.box
+cloud/aws/**/
+env
+__pycache__
