@@ -4,3 +4,5 @@
   hosts: servers
   roles:
     - role: unarchive_from_url_param
+      vars:
+        repo_ip: "{{ hostvars['repo']['ansible_host'] }}"
