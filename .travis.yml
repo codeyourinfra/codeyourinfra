@@ -10,12 +10,9 @@ addons:
 install:
   - pip install -r requirements.txt
 
-env:
-  - SOLUTION_ID=check_server_log_files
-  - SOLUTION_ID=unarchive_from_url_param
-
 script:
-  - cd $SOLUTION_ID && molecule test -s aws
+  - cd check_server_log_files && molecule test -s aws
+  - cd unarchive_from_url_param && molecule test -s aws
 
 notifications:
   slack:
