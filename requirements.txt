@@ -1,3 +1,4 @@
+testinfra
 ansible
 molecule
 python-vagrant
