@@ -1,15 +1,15 @@
 ---
 - name: Create the target directory if it doesn't exist
   file:
-    path: "{{ params[ansible_hostname].target }}"
+    path: "{{ params[inventory_hostname].target }}"
     state: directory
 - name: Install unzip
   apt:
     name: unzip
     update_cache: true
-  when: params[ansible_hostname].url is match(".*\.zip$")
+  when: params[inventory_hostname].url is match(".*\.zip$")
 - name: Unarchive from url
   unarchive:
-    src: "{{ params[ansible_hostname].url }}"
-    dest: "{{ params[ansible_hostname].target }}"
+    src: "{{ params[inventory_hostname].url }}"
+    dest: "{{ params[inventory_hostname].target }}"
     remote_src: true
