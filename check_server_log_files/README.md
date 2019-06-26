@@ -8,15 +8,32 @@ The developers are always requesting you the applications' log files, for troubl
 
 ## Solution
 
-Make the log files available through the web browser! The [playbook.yml](playbook.yml) is an example of Ansible playbook which makes that for you. When executed, the playbook installs and configures the [Apache HTTP Server](https://httpd.apache.org) in a way that the Jenkins log files become accessible through the browser. Set accordingly the variables and you can easily make the same for any application you wish.
+Make the log files available through the web browser! **check_server_log_files** is an example of [Ansible role](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) which makes that for you. When executed, the role installs and configures the [Apache HTTP Server](https://httpd.apache.org) in a way that log files become accessible through the browser.
+
+In our sample the [Jenkins](https://jenkins.io) log is exposed, but you can easily do the same for any application, by setting accordingly the variables. You can either replace the default variables defined in the [defaults/main.yml](defaults/main.yml) file or override them by setting new values in the playbook level, as shown below:
+
+```yml
+---
+- hosts: apps
+  roles:
+    - role: check_server_log_files
+      vars:
+        apache_confs:
+          - directory: /var/log/app1
+            alias: /logs/app1
+            conf: app1-logs.conf
+          - directory: /var/log/app2
+            alias: /logs/app2
+            conf: app2-logs.conf
+```
 
 ## Test
 
-First of all, run the command `vagrant up`, in order to turn on the **jenkins server**. After that, execute the command `ansible-playbook playbook.yml`. Finally, open your web browser and access the Jenkins log files through the **URL** http://192.168.33.10/logs/jenkins. Alternativelly, download the Jenkins log file through the command `wget http://192.168.33.10/logs/jenkins/jenkins.log`.
+First of all, run the command `vagrant up`, in order to turn on the **jenkins server**. After that, execute the command `ansible-playbook playbook.yml`. Finally, open your web browser and access the Jenkins log files through the **URL** <http://192.168.33.10/logs/jenkins>. Alternativelly, download the Jenkins log file through the command `wget http://192.168.33.10/logs/jenkins/jenkins.log`.
 
 ### Automated tests
 
-You can also test the solution automaticaly, by executing `./test.sh` or using [Molecule](https://molecule.readthedocs.io). With the latter, you can perform the test not only locally (the default), but in [AWS](https://aws.amazon.com) as well. During the Codeyourinfra's *continuous integration* process in Travis CI, the solution is tested in a [EC2 instance](https://aws.amazon.com/ec2).
+You can also test the solution automaticaly, by executing `./test.sh` or using [Molecule](https://molecule.readthedocs.io). With the latter, you can perform the test not only locally (the default), but in [AWS](https://aws.amazon.com) as well. During the Codeyourinfra's *continuous integration* process in Travis CI, the solution is tested in an [EC2 instance](https://aws.amazon.com/ec2).
 
 In order to get your environment ready for using *Molecule*, prepare your [Python virtual environment](https://docs.python.org/3/tutorial/venv.html), executing `python3 -m venv env && source env/bin/activate && pip install -r ../requirements.txt`. After that, just run the command `molecule test`, to test the solution locally in a [VirtualBox](https://www.virtualbox.org) VM managed by [Vagrant](https://www.vagrantup.com).
 
