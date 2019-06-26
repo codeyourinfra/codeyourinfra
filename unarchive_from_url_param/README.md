@@ -8,7 +8,22 @@ You have a bunch of servers and quite often you have to manually extract in each
 
 ## Solution
 
-Keep in a separated file all the information needed ([params.json](params.json)). For each server, inform where the compressed file is (**url**) and where it must be extracted in (**target** directory). These parameters will be used during the Ansible playbook's execution ([playbook-servers.yml](playbook-servers.yml)). All the servers listed in the Ansible inventory ([hosts](hosts)) file's **servers** section will be affected in a single execution.
+**unarchive_from_url_param** is an example of [Ansible role](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) which makes it possible. You just need to pass the parameters appropriately. For each server, the role expects a **url** from where the compressed file will be downloaded and a **target** directory to where the content will be extracted. All the hosts that are defined inside the **servers** group in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) are considered on a single execution.
+
+```yml
+---
+- hosts: servers
+  roles:
+    - role: unarchive_from_url_param
+      vars:
+        params:
+          server1:
+            url: https://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+            target: /opt/maven
+          server2:
+            url: https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.1-bin.zip
+            target: /opt/ant
+```
 
 ## Test
 
