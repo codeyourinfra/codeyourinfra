@@ -8,7 +8,7 @@ You have a bunch of servers and quite often you have to manually extract in each
 
 ## Solution
 
-**unarchive_from_url_param** is an example of [Ansible role](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) which makes it possible. You just need to pass the parameters appropriately. For each server, the role expects a **url** from where the compressed file will be downloaded and a **target** directory to where the content will be extracted. All the hosts that are defined inside the **servers** group in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) are considered on a single execution.
+**unarchive_from_url_param** is an example of [Ansible role](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) which makes it possible. You just need to pass the parameters appropriately. For each server, the role expects a **url** from where the compressed file is downloaded and a **target** directory to where the content is extracted. All the hosts that are defined inside the **servers** group in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) are considered on a single execution.
 
 ```yml
 ---
