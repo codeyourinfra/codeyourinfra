@@ -12,7 +12,7 @@ install:
 
 script:
   - cd check_server_log_files && molecule test -s aws
-  - cd ../unarchive_from_url_param && molecule test -s aws
+  - test $? -eq 0 && cd ../unarchive_from_url_param && molecule test -s aws
 
 notifications:
   slack:
