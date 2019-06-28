@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Gustavo Muniz do Carmo
   description: Role to make log files available through the web browser
