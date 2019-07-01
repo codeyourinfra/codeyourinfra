@@ -1,0 +1,18 @@
+---
+cfgfile_path: /etc/conf
+content:
+  qa1:
+    - key: prop1
+      value: A
+    - key: prop2
+      value: B
+  qa2:
+    - key: prop1
+      value: C
+    - key: prop2
+      value: D
+  qa3:
+    - key: prop1
+      value: E
+    - key: prop2
+      value: F

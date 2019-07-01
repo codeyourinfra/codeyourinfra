@@ -1,16 +1,5 @@
 ---
 - hosts: qa
   become: yes
-  vars:
-    hostname: "{{ansible_hostname}}"
-    file: "{{config_file|default('config.json')}}"
-    config: "{{lookup('file', '{{file}}')}}"
-    items_query: "[?host=='{{hostname}}'].items"
-  tasks:
-  - name: Set the configuration file content
-    lineinfile:
-      path: /etc/conf
-      create: yes
-      regexp: "^{{item.key}}=.*$"
-      line: "{{item.key}}={{item.value}}"
-    with_items: "{{config|json_query(items_query)}}"
+  roles:
+    - same_cfgfile_diff_content
