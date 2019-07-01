@@ -1,5 +1,5 @@
 ---
 - hosts: qa
-  become: yes
+  become: true
   roles:
     - same_cfgfile_diff_content

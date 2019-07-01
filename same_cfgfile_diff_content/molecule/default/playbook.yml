@@ -1,0 +1,6 @@
+---
+- name: Converge
+  become: true
+  hosts: qa
+  roles:
+    - role: same_cfgfile_diff_content
