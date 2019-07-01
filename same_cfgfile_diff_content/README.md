@@ -12,7 +12,7 @@ Instead of having a version of the same configuration file for each environment,
 
 ## Test
 
-First of all, turn on the 3 VMs that represent the QA environments, executing the command `$ vagrant up`. After that, execute the command `$ ansible-playbook playbook.yml -i hosts`. Finally, in order to check the configuration file's content of every environment, execute the command `$ ansible qa -m shell -a "cat /etc/conf" -i hosts`.
+First of all, turn on the 3 VMs that represent the QA environments, executing the command `$ vagrant up`. After that, execute the command `$ ansible-playbook playbook.yml`. Finally, in order to check the configuration file's content of every environment, execute the command `$ ansible qa -m shell -a "cat /etc/conf"`.
 
 If you prefer to test automatically, just run `$ ./test.sh`. Likewise, if you prefer to test against EC2 instances, rather than local VMs, just run `$ cd aws/ && ./test.sh`.
 

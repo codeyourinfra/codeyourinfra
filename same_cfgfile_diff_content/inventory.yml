@@ -1,0 +1,17 @@
+---
+all:
+  children:
+    qa:
+      hosts:
+        qa1:
+          ansible_host: 192.168.33.10
+          ansible_ssh_private_key_file: .vagrant/machines/qa1/virtualbox/private_key
+        qa2:
+          ansible_host: 192.168.33.20
+          ansible_ssh_private_key_file: .vagrant/machines/qa2/virtualbox/private_key
+        qa3:
+          ansible_host: 192.168.33.30
+          ansible_ssh_private_key_file: .vagrant/machines/qa3/virtualbox/private_key
+  vars:
+    ansible_user: vagrant
+    ansible_python_interpreter: python3
