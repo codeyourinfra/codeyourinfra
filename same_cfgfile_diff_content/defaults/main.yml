@@ -2,17 +2,11 @@
 cfgfile_path: /etc/conf
 content:
   qa1:
-    - key: prop1
-      value: A
-    - key: prop2
-      value: B
+    prop1: A
+    prop2: B
   qa2:
-    - key: prop1
-      value: C
-    - key: prop2
-      value: D
+    prop1: C
+    prop2: D
   qa3:
-    - key: prop1
-      value: E
-    - key: prop2
-      value: F
+    prop1: E
+    prop2: F

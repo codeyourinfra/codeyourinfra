@@ -5,4 +5,4 @@
     create: true
     regexp: "^{{ item.key }}=.*$"
     line: "{{ item.key }}={{ item.value }}"
-  loop: "{{ content[inventory_hostname] }}"
+  loop: "{{ content[inventory_hostname] | dict2items }}"
