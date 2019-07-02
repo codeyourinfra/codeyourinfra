@@ -1,0 +1,55 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: ec2
+lint:
+  name: yamllint
+platforms:
+  - name: qa1
+    region: eu-west-2
+    image_owner: 099720109477
+    image_name: ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*
+    instance_type: t2.micro
+    vpc_subnet_id: subnet-1cb17175
+    groups:
+      - qa
+  - name: qa2
+    region: eu-west-2
+    image_owner: 099720109477
+    image_name: ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*
+    instance_type: t2.micro
+    vpc_subnet_id: subnet-1cb17175
+    groups:
+      - qa
+  - name: qa3
+    region: eu-west-2
+    image_owner: 099720109477
+    image_name: ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*
+    instance_type: t2.micro
+    vpc_subnet_id: subnet-1cb17175
+    groups:
+      - qa
+provisioner:
+  name: ansible
+  log: true
+  lint:
+    name: ansible-lint
+scenario:
+  name: aws
+  test_sequence:
+    - lint
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  directory: ../tests
+  lint:
+    name: flake8
