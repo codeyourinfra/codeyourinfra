@@ -27,7 +27,7 @@ You have a bunch of servers and quite often you have to manually extract in each
 
 ## Test
 
-First of all, turn on the VMs, executing the command `$ vagrant up`. Once the test environment is up, execute the command `$ ansible-playbook playbook.yml`. Finally, in order to check if the compressed files were properly extracted in both servers, execute the command `$ ansible servers -m shell -a "ls /var/target"`.
+First of all, turn on the VMs, executing the command `$ vagrant up`. Once the test environment is up, execute the command `$ ansible-playbook playbook.yml`. Finally, in order to check if the compressed files were properly extracted in both servers, execute the command `$ ansible servers -m shell -a "ls /opt"`.
 
 ### Automated tests
 

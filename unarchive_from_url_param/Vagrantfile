@@ -4,17 +4,12 @@
 load '../common/timestamp-appender.rb'
 
 Vagrant.configure("2") do |config|
-  config.vm.define "repo" do |repo|
-    repo.vm.box = "codeyourinfra/repo"
-    repo.vm.hostname = "repo"
-    repo.vm.network "private_network", ip: "192.168.33.10"
-  end
+  config.vm.box = "ubuntu/bionic64"
 
   (1..2).each do |i|
     config.vm.define "server#{i}" do |server|
-      server.vm.box = "ubuntu/bionic64"
       server.vm.hostname = "server#{i}"
-      server.vm.network "private_network", ip: "192.168.33.#{i+1}0"
+      server.vm.network "private_network", ip: "192.168.33.#{i}0"
     end
   end
 
