@@ -1,0 +1,15 @@
+---
+cfgfile_path: /etc/conn.properties
+content:
+  qa1:
+    url: jdbc:mysql://db1/mydb
+    username: qa1user
+    password: qa1secret
+  qa2:
+    url: jdbc:mysql://db2/mydb
+    username: qa2user
+    password: qa2secret
+  qa3:
+    url: jdbc:mysql://db3/mydb
+    username: qa3user
+    password: qa3secret

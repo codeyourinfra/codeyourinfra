@@ -1,5 +1,7 @@
 ---
 - hosts: qa
   become: true
+  vars_files:
+    - conncfg.yml
   roles:
     - same_cfgfile_diff_content

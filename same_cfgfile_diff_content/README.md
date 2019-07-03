@@ -4,29 +4,29 @@ This solution is explained in detail in the Codeyourinfra project blog post [How
 
 ## Problem
 
-The dev team has to deploy the application in different QA environments. The application requires a properties file where the database string connection is defined. In each environment the database string connection is different. This is just an example of the same configuration file with different content in different environments.
+The dev team has to deploy the application in different QA environments. The application requires a properties file where either the database string connection and the database credentials are defined. In each environment they are different. This is just an example of the same configuration file with different content in different environments.
 
 ## Solution
 
-Instead of having a version of the same configuration file for each environment, it's possible to maintain just one, including all the values required in every environment ([config.json](config.json)). This metadata is then used during the single Ansible playbook's execution ([playbook.yml](playbook.yml)) that sets the configuration file's content, specific to each environment. 
+Instead of having a version of the same configuration file for each environment, it's possible to keep just one, including all the values required in every environment ([conncfg.yml](conncfg.yml)). This variables are then used during the **same_cfgfile_diff_content** [Ansible role](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)'s execution, when the configuration file's content is set, specific to each environment.
+
+```yml
+---
+- hosts: qa
+  vars_files:
+    - conncfg.yml
+  roles:
+    - same_cfgfile_diff_content
+```
 
 ## Test
 
-First of all, turn on the 3 VMs that represent the QA environments, executing the command `$ vagrant up`. After that, execute the command `$ ansible-playbook playbook.yml`. Finally, in order to check the configuration file's content of every environment, execute the command `$ ansible qa -m shell -a "cat /etc/conf"`.
+First of all, turn on the 3 VMs that represent the QA environments, executing the command `$ vagrant up`. After that, execute the command `$ ansible-playbook playbook.yml`. Finally, in order to check the configuration file's content of every environment, execute the command `$ ansible qa -m shell -a "cat /etc/conn.properties"`.
 
-If you prefer to test automatically, just run `$ ./test.sh`. Likewise, if you prefer to test against EC2 instances, rather than local VMs, just run `$ cd aws/ && ./test.sh`.
+### Automated tests
 
-### Important
+You can also test the solution automaticaly, by executing `./test.sh` or using [Molecule](https://molecule.readthedocs.io). With the latter, you can perform the test not only locally (the default), but in [AWS](https://aws.amazon.com) as well. During the Codeyourinfra's *continuous integration* process in Travis CI, the solution is tested on [Amazon EC2](https://aws.amazon.com/ec2).
 
-The test was done in the environment described in the table below.
+In order to get your environment ready for using *Molecule*, prepare your [Python virtual environment](https://docs.python.org/3/tutorial/venv.html), executing `python3 -m venv env && source env/bin/activate && pip install -r ../requirements.txt`. After that, just run the command `molecule test`, to test the solution locally in a [VirtualBox](https://www.virtualbox.org) VM managed by [Vagrant](https://www.vagrantup.com).
 
-Software | Version
---- | -----
-Host OS | OS X El Capitan 10.11.6
-VMs OS | Ubuntu 14.04.3 LTS
-Vagrant | 2.0.0
-VirtualBox | 5.1.30
-VirtualBox Extension Pack | 5.1.28
-Ansible | 2.4.0.0
-
-In addition, the test requires Internet connection, for the **minimal/trusty64** Vagrant box downloading. Depending on the Internet connection speed, the test environment can last more than you expect to be up and running, in the first time.
+If you prefer performing the test in AWS, bear in mind you must have your credentials appropriately in **~/.aws/credentials**. You can [configure it through the AWS CLI tool](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). The test is performed in the AWS region *Europe - London (eu-west-2)*. Just run `molecule test -s aws` and check the running instances through your [AWS Console](https://eu-west-2.console.aws.amazon.com/ec2/v2).
