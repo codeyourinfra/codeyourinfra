@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: qa1
+    image: ubuntu:bionic
+  - name: qa2
+    image: ubuntu:bionic
+  - name: qa3
+    image: ubuntu:bionic
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: docker
+verifier:
+  name: testinfra
+  directory: ../tests
+  lint:
+    name: flake8

@@ -3,3 +3,4 @@ molecule==2.20.0
 python-vagrant==0.5.15
 boto==2.49.0
 boto3==1.8.6
+docker==3.4.1
