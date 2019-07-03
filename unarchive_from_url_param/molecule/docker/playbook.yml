@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: unarchive_from_url_param
+      vars:
+        params:
+          server1:
+            url: https://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+            target: /var/target
+          server2:
+            url: https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.1-bin.zip
+            target: /var/target
