@@ -1,0 +1,13 @@
+---
+- hosts: servers
+  become: true
+  tasks:
+    - name: Enable SSH Password Authentication
+      replace:
+        path: /etc/ssh/sshd_config
+        regexp: '^(PasswordAuthentication )no$'
+        replace: '\1yes'
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
