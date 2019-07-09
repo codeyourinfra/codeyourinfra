@@ -2,27 +2,5 @@
 - hosts: monitor
   become: true
   gather_facts: false
-  tasks:
-    - name: Install sshpass
-      apt:
-        name: sshpass
-        update_cache: true
-      when: host is defined and user is defined and password is defined
-    - name: Add the server into the monitored_servers group
-      lineinfile:
-        path: /etc/ansible/hosts
-        insertafter: "^\\[monitored_servers\\]$"
-        line: "{{host}} ansible_user={{user}} ansible_ssh_pass={{password}}"
-      when: host is defined and user is defined and password is defined
-    - name: Copy the SSH user private key
-      copy:
-        src: "{{private_key}}"
-        dest: "/etc/ansible/{{host}}.private_key"
-        mode: 0400
-      when: host is defined and private_key is defined
-    - name: Add the server into the monitored_servers group
-      lineinfile:
-        path: /etc/ansible/hosts
-        insertafter: "^\\[monitored_servers\\]$"
-        line: "{{host}} ansible_user={{user}} ansible_ssh_private_key_file=/etc/ansible/{{host}}.private_key"
-      when: host is defined and user is defined and private_key is defined
+  roles:
+    - monitor_inventory
