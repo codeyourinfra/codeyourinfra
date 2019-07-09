@@ -1,0 +1,8 @@
+---
+monitored_servers:
+  - host: 192.168.33.20
+    user: vagrant
+    password: vagrant
+  - host: 192.168.33.30
+    user: vagrant
+    private_key: .vagrant/machines/server2/virtualbox/private_key

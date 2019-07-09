@@ -16,10 +16,8 @@ vagrant up
 checkPlaybookSyntax playbook-add-server.yml
 
 # execute the solution
-ansible-playbook playbook-add-server.yml -e "host=192.168.33.20 user=vagrant private_key=.vagrant/machines/server1/virtualbox/private_key" | tee ${tmpfile}
-assertEquals 1 $(tail -12 ${tmpfile} | grep -c "failed=0")
-ansible-playbook playbook-add-server.yml -e "host=192.168.33.30 user=vagrant private_key=.vagrant/machines/server2/virtualbox/private_key" | tee ${tmpfile}
-assertEquals 1 $(tail -12 ${tmpfile} | grep -c "failed=0")
+ansible-playbook playbook-add-server.yml | tee ${tmpfile}
+assertEquals 1 $(tail -20 ${tmpfile} | grep -c "failed=0")
 
 # validate the solution
 echo "Waiting 1 minute..."
