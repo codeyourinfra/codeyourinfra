@@ -1,6 +1,0 @@
-[monitored_servers]
-localhost ansible_connection=local
-
-[monitored_servers:vars]
-ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
-ansible_python_interpreter=/usr/bin/python3

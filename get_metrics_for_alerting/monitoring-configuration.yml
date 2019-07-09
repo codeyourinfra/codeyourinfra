@@ -52,20 +52,6 @@
       register: response
       changed_when: response.status == 200
       failed_when: response.status != 200 and response.json.message != "A dashboard with the same name in the folder already exists"
-    - name: Create the Ansible directory if it doesn't exist
-      file:
-        path: /etc/ansible
-        state: directory
-    - name: Copy the Ansible inventory
-      copy:
-        src: monitored_hosts
-        dest: /etc/ansible/hosts
-    - name: Disable SSH key host checking
-      ini_file:
-        path: /etc/ansible/ansible.cfg
-        section: defaults
-        option: host_key_checking
-        value: False
     - name: Create the Ansible playbooks directory if it doesn't exist
       file:
         path: /etc/ansible/playbooks
