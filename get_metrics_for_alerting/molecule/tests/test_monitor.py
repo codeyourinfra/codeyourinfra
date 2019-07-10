@@ -12,6 +12,4 @@ def test_log(host):
     log = host.file("/etc/ansible/playbooks/playbook-get-metrics.log")
     assert log.exists
     assert log.is_file
-    assert log.contains("192.168.33.20              : ok=2")
-    assert log.contains("192.168.33.30              : ok=2")
-    assert log.contains("localhost                  : ok=2")
+    assert log.content_string.count("failed=0") == 3
