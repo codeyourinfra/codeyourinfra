@@ -5,4 +5,4 @@ monitored_servers:
     password: vagrant
   - host: 192.168.33.30
     user: vagrant
-    private_key: .vagrant/machines/server2/virtualbox/private_key
+    private_key: "{{ hostvars['server2']['ansible_private_key_file'] }}"

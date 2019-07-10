@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+  options:
+    provision: false
+lint:
+  name: yamllint
+platforms:
+  - name: monitor
+    box: codeyourinfra/monitor
+    interfaces:
+      - network_name: private_network
+        ip: 192.168.33.10
+  - name: server1
+    box: ubuntu/bionic64
+    interfaces:
+      - network_name: private_network
+        ip: 192.168.33.20
+    groups:
+      - servers
+  - name: server2
+    box: ubuntu/bionic64
+    interfaces:
+      - network_name: private_network
+        ip: 192.168.33.30
+    groups:
+      - servers
+provisioner:
+  name: ansible
+  log: true
+  lint:
+    name: ansible-lint
+  env:
+    ANSIBLE_ROLES_PATH: ../../roles/
+  inventory:
+    group_vars:
+      all:
+        ansible_python_interpreter: python3
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  directory: ../tests
+  lint:
+    name: flake8
