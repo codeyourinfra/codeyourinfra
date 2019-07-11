@@ -16,4 +16,10 @@ First of all, run the command `vagrant up monitor`, in order to turn on the **mo
 
 You can add the other servers to the monitoring service, if you want. In order to add the **server1**, firstly boot it up, through the command `vagrant up server1`. After that, execute the command `ansible-playbook playbook-add-server.yml -e "host=192.168.33.20 user=vagrant password=vagrant"`. The parameters **host**, **user** and **password** are used by Ansible to access the monitored hosts, through SSH, from the monitoring server. Once added, wait at least 1 minute and check if Ansible is properly getting the metrics from the new monitored server by executing the ad-hoc command `ansible monitor -m shell -a "cat /etc/ansible/playbooks/playbook-get-metrics.log"`. Repeat these steps for the **server2**, at your will.
 
-If you prefer to test automatically, just run `./test.sh`.
+### Automated tests
+
+You can also test the solution automaticaly, by executing `./test.sh` or using [Molecule](https://molecule.readthedocs.io). With the latter, you can perform the test not only locally (the default), but in [AWS](https://aws.amazon.com) as well. During the Codeyourinfra's *continuous integration* process in Travis CI, the solution is tested on [Amazon EC2](https://aws.amazon.com/ec2).
+
+In order to get your environment ready for using *Molecule*, prepare your [Python virtual environment](https://docs.python.org/3/tutorial/venv.html), executing `python3 -m venv env && source env/bin/activate && pip install -r ../requirements.txt`. After that, just run the command `molecule test`, to test the solution locally in a [VirtualBox](https://www.virtualbox.org) VM managed by [Vagrant](https://www.vagrantup.com).
+
+If you prefer performing the test in AWS, bear in mind you must have your credentials appropriately in **~/.aws/credentials**. You can [configure it through the AWS CLI tool](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). The test is performed in the AWS region *Europe - London (eu-west-2)*. Just run `molecule test -s aws` and check the running instances through your [AWS Console](https://eu-west-2.console.aws.amazon.com/ec2/v2).
