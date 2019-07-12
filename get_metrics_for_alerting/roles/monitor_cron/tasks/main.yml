@@ -1,0 +1,23 @@
+---
+- name: Set the playbooks directory
+  set_fact:
+    playbooks_dir: /etc/ansible/playbooks
+- name: Create the Ansible playbooks directory if it doesn't exist
+  file:
+    path: "{{ playbooks_dir }}"
+    state: directory
+- name: Copy the playbooks
+  template:
+    src: "{{ item }}"
+    dest: "{{ playbooks_dir }}/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: 0644
+    variable_start_string: '[%'
+    variable_end_string: '%]'
+  loop: "{{ playbooks }}"
+- name: Run each playbook every minute
+  cron:
+    name: "run {{ item | basename }}"
+    job: "/usr/local/bin/ansible-playbook {{ playbooks_dir }}/{{ item | basename }} > {{ playbooks_dir }}/{{ (item | basename | splitext)[0] }}.log 2>&1"
+  loop: "{{ playbooks }}"
