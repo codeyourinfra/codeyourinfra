@@ -1,6 +1,6 @@
 # The Codeyourinfra project
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub release](https://img.shields.io/github/release/codeyourinfra/codeyourinfra.svg)]() [![Build status](https://travis-ci.org/codeyourinfra/codeyourinfra.svg?branch=master)](https://travis-ci.org/codeyourinfra/codeyourinfra)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub release](https://img.shields.io/github/release/codeyourinfra/codeyourinfra.svg)](https://github.com/codeyourinfra/codeyourinfra/releases/latest) [![Build status](https://travis-ci.org/codeyourinfra/codeyourinfra.svg?branch=master)](https://travis-ci.org/codeyourinfra/codeyourinfra)
 
 The Codeyourinfra project aims to bring dev tools and practices to the ops world. The objective is to help sysadmins in gradually adopting tools like [Ansible](https://www.ansible.com), [Vagrant](https://www.vagrantup.com), [GIT](https://git-scm.com) and [Jenkins](https://jenkins.io), and practices like coding, testing, versioning and deploying the infrastructure.
 
@@ -9,7 +9,7 @@ The Codeyourinfra project aims to bring dev tools and practices to the ops world
 The project addresses sysadmins' common pain points, giving solutions that use such tools and practices. The solutions are all explained in detail at the [project website](http://codeyourinfra.today), and placed each one in a subdirectory of this repository. They are as follows:
 
 * [Unarchive different remote files in different target servers](https://github.com/codeyourinfra/unarchive_from_url_param)
-* [Same configuration file with different content in different environments](https://github.com/codeyourinfra/codeyourinfra/tree/master/same_cfgfile_diff_content)
+* [Same configuration file with different content in different environments](https://github.com/codeyourinfra/same_cfgfile_diff_content)
 * [Check log files in a server through the web browser](https://github.com/codeyourinfra/codeyourinfra/tree/master/check_server_log_files)
 * [Get metrics for alerting in advance and preventing trouble](https://github.com/codeyourinfra/codeyourinfra/tree/master/get_metrics_for_alerting)
 
