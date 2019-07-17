@@ -1,6 +1,11 @@
 ---
 - hosts: monitor
   become: true
+  roles:
+    - role: monitor_cron
+      vars:
+        playbooks:
+          - playbook-get-metrics.yml
   tasks:
     - name: Install influxdb Python package
       pip:
@@ -52,20 +57,3 @@
       register: response
       changed_when: response.status == 200
       failed_when: response.status != 200 and response.json.message != "A dashboard with the same name in the folder already exists"
-    - name: Create the Ansible playbooks directory if it doesn't exist
-      file:
-        path: /etc/ansible/playbooks
-        state: directory
-    - name: Copy the playbook-get-metrics.yml
-      template:
-        src: playbook-get-metrics.yml
-        dest: /etc/ansible/playbooks/playbook-get-metrics.yml
-        owner: root
-        group: root
-        mode: 0644
-        variable_start_string: '[%'
-        variable_end_string: '%]'
-    - name: Get metrics from monitored servers every minute
-      cron:
-        name: "get metrics"
-        job: "/usr/local/bin/ansible-playbook /etc/ansible/playbooks/playbook-get-metrics.yml > /etc/ansible/playbooks/playbook-get-metrics.log 2>&1"
