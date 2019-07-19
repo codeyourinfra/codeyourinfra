@@ -10,7 +10,7 @@ The project addresses sysadmins' common pain points, giving solutions that use s
 
 * [Unarchive different remote files in different target servers](https://github.com/codeyourinfra/unarchive_from_url_param)
 * [Same configuration file with different content in different environments](https://github.com/codeyourinfra/same_cfgfile_diff_content)
-* [Check log files in a server through the web browser](https://github.com/codeyourinfra/codeyourinfra/tree/master/check_server_log_files)
+* [Check log files in a server through the web browser](https://github.com/codeyourinfra/check_server_log_files)
 * [Get metrics for alerting in advance and preventing trouble](https://github.com/codeyourinfra/codeyourinfra/tree/master/get_metrics_for_alerting)
 
 ## How to contribute
