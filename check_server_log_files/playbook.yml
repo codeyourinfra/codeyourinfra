@@ -1,6 +1,0 @@
----
-- hosts: jenkins
-  become: true
-  gather_facts: false
-  roles:
-    - check_server_log_files

@@ -1,5 +1,0 @@
----
-apache_confs:
-  - directory: /var/log/jenkins
-    alias: /logs/jenkins
-    conf: jenkins-logs.conf

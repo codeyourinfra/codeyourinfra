@@ -1,5 +1,6 @@
 .vagrant/
 .vscode/
+.DS_Store
 *.box
 *.retry
 ubuntu-*-cloudimg-console.log
