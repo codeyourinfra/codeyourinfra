@@ -1,6 +1,0 @@
----
-- name: Converge
-  become: true
-  hosts: monitor
-  roles:
-    - role: monitor_inventory

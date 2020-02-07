@@ -1,6 +1,0 @@
----
-- hosts: monitored_servers
-  tasks:
-  - name: Show the used memory percentage
-    debug:
-      msg: "{{ (ansible_memory_mb.real.used / ansible_memory_mb.real.total * 100) | round(2) }}%"

@@ -1,5 +1,0 @@
-[monitored_servers]
-localhost ansible_connection=local
-
-[monitored_servers:vars]
-ansible_python_interpreter=python3

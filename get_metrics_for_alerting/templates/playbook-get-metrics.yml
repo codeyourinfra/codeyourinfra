@@ -1,9 +1,0 @@
----
-- hosts: monitored_servers
-  tasks:
-  - name: Used memory percentage
-    uri:
-      url: http://[% monitor_host | default(hostvars['monitor']['ansible_host']) %]:8086/write?db=monitor
-      method: POST
-      body: "used_mem_pct,host={{ inventory_hostname }} value={{ ansible_memory_mb.real.used / ansible_memory_mb.real.total * 100 }}"
-      status_code: 204

@@ -1,8 +1,0 @@
----
-monitored_servers:
-  - host: 192.168.33.20
-    user: vagrant
-    password: vagrant
-  - host: 192.168.33.30
-    user: vagrant
-    private_key: "{{ hostvars['server2']['ansible_private_key_file'] }}"

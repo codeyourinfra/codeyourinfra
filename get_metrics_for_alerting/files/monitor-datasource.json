@@ -1,8 +1,0 @@
-{
-  "name": "monitor",
-  "isDefault": true,
-  "type": "influxdb",
-  "url": "http://localhost:8086",
-  "access": "proxy",
-  "database": "monitor"
-}

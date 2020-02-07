@@ -1,5 +1,0 @@
----
-- import_playbook: ../../monitoring-configuration.yml
-  vars:
-    monitor_host: 192.168.33.10
-- import_playbook: ../../servers-configuration.yml

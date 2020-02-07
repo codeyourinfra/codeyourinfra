@@ -1,3 +1,0 @@
----
-- import_playbook: ../../monitoring-configuration.yml
-- import_playbook: ../../servers-configuration.yml

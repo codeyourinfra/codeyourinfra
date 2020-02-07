@@ -1,8 +1,0 @@
-{
-  "name": "Slack notification channel",
-  "type":  "slack",
-  "isDefault": false,
-  "settings": {
-    "url": "https://hooks.slack.com/services/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"
-  }
-}
