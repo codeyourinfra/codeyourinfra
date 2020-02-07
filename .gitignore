@@ -1,9 +1,2 @@
-.vagrant/
 .vscode/
 .DS_Store
-*.box
-*.retry
-ubuntu-*-cloudimg-console.log
-cloud/aws/**/
-env
-__pycache__

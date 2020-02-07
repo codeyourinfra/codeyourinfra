@@ -1,7 +1,0 @@
-[ec2_instances]
-
-[ec2_instances:vars]
-ansible_user=ubuntu
-ansible_ssh_private_key_file={{ private_key_file }}
-ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
-ansible_python_interpreter=/usr/bin/python3
