@@ -1,6 +1,6 @@
 # The Codeyourinfra project
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub release](https://img.shields.io/github/release/codeyourinfra/codeyourinfra.svg)](https://github.com/codeyourinfra/codeyourinfra/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub release](https://img.shields.io/github/release/codeyourinfra/codeyourinfra.svg)](https://github.com/codeyourinfra/codeyourinfra/releases/latest) [![Codeyourinfra project website](https://img.shields.io/website/http/codeyourinfra.today.svg)](http://codeyourinfra.today)
 
 The Codeyourinfra project aims to bring dev tools and practices to the ops world. The objective is to help sysadmins in gradually adopting tools like [Ansible](https://www.ansible.com), [Vagrant](https://www.vagrantup.com), [GIT](https://git-scm.com) and [Jenkins](https://jenkins.io), and practices like coding, testing, versioning and deploying the infrastructure.
 
