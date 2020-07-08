@@ -1,0 +1,9 @@
+[submodule "roles/check_server_log_files"]
+	path = roles/check_server_log_files
+	url = https://github.com/codeyourinfra/check_server_log_files
+[submodule "roles/same_cfgfile_diff_content"]
+	path = roles/same_cfgfile_diff_content
+	url = https://github.com/codeyourinfra/same_cfgfile_diff_content
+[submodule "roles/unarchive_from_url_param"]
+	path = roles/unarchive_from_url_param
+	url = https://github.com/codeyourinfra/unarchive_from_url_param

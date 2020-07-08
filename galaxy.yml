@@ -1,0 +1,17 @@
+---
+namespace: codeyourinfra
+name: codeyourinfra
+version: 1.0.0
+readme: README.md
+authors:
+  - Gustavo Muniz do Carmo <gustavo@codeyourinfra.today> (http://codeyourinfra.today)
+dependencies: {}
+description: Ansible roles collection for automating all sort of tasks.
+license:
+  - MIT
+tags:
+  - codeyourinfra
+  - roles
+  - collection
+  - automation
+repository: https://www.github.com/codeyourinfra/codeyourinfra
